@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf import settings
 from . import views
 
+# URL paths for quotes
 urlpatterns = [
   path(r'', views.quotes, name = "quotes"),
   path(r'quotes', views.quotes, name = "quotes"),
