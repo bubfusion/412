@@ -4,7 +4,7 @@ from . import views
 
 # URL paths for restaurant
 urlpatterns = [
-  path(r'main', views.main, name = "main"),
-  path(r'order', views.order, name = "order"),
-  path(r'confirmation', views.confirmation, name = "confirmation"),
+  path(r'main', views.main, name = "main"), #main page of Zeno's
+  path(r'order', views.order, name = "order"), #order page for food
+  path(r'confirmation', views.confirmation, name = "confirmation"), #order confirmation page
 ]

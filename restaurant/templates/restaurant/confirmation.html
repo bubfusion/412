@@ -1,10 +1,12 @@
 {% extends "restaurant/base.html" %}
 
 {% block content %}
+<!-- Thanks user, gives total price, and gives time food will be ready -->
 <p>Thank you {{name}} for your order! Your total is ${{total}} and your
   food will be ready on {{ready_time}}
 </p><br>
 
+<!-- Loops through each item bought -->
 <h4>Reciept</h4>
 <ul>
   {% for item in reciept %}

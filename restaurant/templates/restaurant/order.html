@@ -3,16 +3,23 @@
 {% block content %}
 
 
+<!-- form with post action to confirmation url -->
 <form action="{% url 'confirmation' %}" method="POST">
+
+  <!-- CSRF token to prevent hacks -->
   {% csrf_token %}
+
+  <!-- Details of customer -->
   Name:<input type="text" name="name"><br>
   Email:<input type="email" name="email"><br>
   Phone number:<input type="tel" name="phone"><br>
   <br>
+
+  <!-- Food options -->
   Turkey sub $8: <input type="checkbox" name="turkey"><br>
   French fries $4: <input type="checkbox" name="fries"><br>
-
   Super roast beef $11: <input type="checkbox" name="beef" id="beef"><br>
+  <!-- Extras for roast beef -->
   <div id="extras">
     Mayo $0.25:<input type="checkbox" name="mayo"><br>
     Cheese $0.50: <input type="checkbox" name="cheese"><br>
@@ -20,8 +27,10 @@
   </div>
 
 
+  <!-- Changing seafood special area -->
   <h3>Seafood special!</h3>
   {{special}} $12: <input type="checkbox" name="special"><br>
+  <!-- Form submit button-->
   <input type="submit">
 </form>
 

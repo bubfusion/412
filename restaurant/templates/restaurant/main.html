@@ -2,8 +2,16 @@
 
 {% block content %}
 
+
+<!-- Order now section. Allows users to get to /order from main -->
+<h2>Order now</h2>
+<p>To place an order for pickup, click <a href="{% url 'order' %}"> here!</a></p>
+
+<!-- Location details about zenos -->
 <h3>Location:</h3>
 <p>40 Central St, Ipswich, MA 01938</p><br>
+
+<!-- Hours of Zeno's -->
 <h3>Hours</h3>
 <ul>
   <li>Monday - Thursday: 10:30AM - 8:00PM </li>
@@ -11,6 +19,8 @@
   <li>Closed Sundays</li>
 </ul>
 
+
+<!-- Images of food and store -->
 <img src="https://s3-media0.fl.yelpcdn.com/bphoto/9U5uTVm3Ci8YtnO4ZC3dZg/348s.jpg" , alt="Super 3way from Zeno's" ,
   width="400">
 <img src="https://www.zenosroastbeef.com/images/specific/zenos/frontbuilding.jpg" , alt="front of store" , width="700">

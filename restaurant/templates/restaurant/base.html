@@ -1,7 +1,9 @@
 {% load static %}
 
+<!-- Loads and uses stylesheet -->
 <link rel="stylesheet" href="{% static 'restaurant/style.css' %}">
 
+<!-- HTML doc type and header -->
 <!DOCTYPE html>
 <html>
 
@@ -11,6 +13,7 @@
 
 <body>
   <h2>Zeno's Roast Beef</h2>
+  <!-- Zenos logo -->
   <img src="https://www.zenosroastbeef.com/images/specific/zenos/logotall2.png" , alt="zeno's logo" , class="center">
   {% block content %}{% endblock content %}
 </body>
