@@ -1,0 +1,15 @@
+{% extends "restaurant/base.html" %}
+
+{% block content %}
+<p>Thank you {{name}} for your order! Your total is ${{total}} and your
+  food will be ready on {{ready_time}}
+</p><br>
+
+<h4>Reciept</h4>
+<ul>
+  {% for item in reciept %}
+  <li>{{item}}</li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

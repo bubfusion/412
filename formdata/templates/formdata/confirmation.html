@@ -1,0 +1,13 @@
+<!-- Show a basic HTML form to the client -->
+
+{% extends 'formdata/base.html' %}
+
+{% block content %}
+
+<form action="{% url 'submit' %}">
+  {% csrf_token %}
+  <h1>Thank you for submitting!</h1>
+  <p>Your favorite color is {{color}} and your name is {{name}}</p>
+</form>
+
+{% endblock %}

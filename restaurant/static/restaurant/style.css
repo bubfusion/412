@@ -1,0 +1,22 @@
+body {
+    color: white;
+    background-color: black;
+    padding: 10px;
+    margin: 10px;
+    font-family: Helvetica, serif;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+#extras {
+    display: none;
+}
+
+#beef:checked~#extras {
+    display: block;
+}
