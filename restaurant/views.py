@@ -2,6 +2,7 @@ import random
 import datetime
 import pytz
 from django.shortcuts import render
+from django.utils import timezone
 
 
 
@@ -75,6 +76,8 @@ def confirmation(request):
   current_time = datetime.datetime.now()
   time_change = datetime.timedelta(minutes=random.randint(30,60)) 
   ready_time = current_time + time_change
+
+  print(current_time)
 
   if request.POST:
         name = request.POST['name']
