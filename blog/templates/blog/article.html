@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+
+
+{% block content %}
+<h1>Show all articles</h1>
+
+<main class="grid-container">
+  <article>
+    <img src="{{article.image_url}}" alt="{{article.image_url}}">
+    <div>
+      <h2>{{article.title}}</h2>
+      <h3>By: {{article.author}} at {{article.published}}</h3>
+      <p>
+        {{article.text}}
+      </p>
+    </div>
+
+  </article>
+
+  {% for c in article.get_comments %}
+  <strong> by {{c.author}} at {{c.published}} </strong>
+  <p>
+    {{c.text}}
+  </p>
+
+  {% endfor %}
+</main>
+{% endblock %}

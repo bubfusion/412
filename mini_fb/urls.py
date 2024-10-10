@@ -6,4 +6,5 @@ from . import views
 urlpatterns = [
   path(r'', views.ShowAllView.as_view(), name = "show_all"),
   path(r'mini_fb', views.ShowAllView.as_view(), name = "show_all"),
+  path(r'profile/<int:pk>', views.ShowProfilePageView.as_view(), name = "profile"),
 ]

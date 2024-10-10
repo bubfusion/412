@@ -11,6 +11,7 @@
     <img src="{{a.image_url}}" alt="{{a.image_url}}">
 
     <div>
+      <a href="{% url 'article' a.pk%}">Article link</a>
       <h2>{{a.title}}</h2>
       <h3>By: {{a.author}} at {{a.published}}</h3>
 

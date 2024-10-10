@@ -7,15 +7,17 @@
 
 <main class="grid-container">
   {% for p in profiles %}
-  <article>
-    <img src="{{p.pfp_url}}" alt="{{p.pfp_url}}">
+  <profile>
+    <a href="{% url 'profile' p.pk %}">
+      <img src="{{p.pfp_url}}" alt="{{p.pfp_url}}">
 
-    <div>
-      <h2>{{p.first_name}} {{p.last_name}}</h2>
-      <h3>From {{p.city}}</h3>
+      <div>
+        <h2>{{p.first_name}} {{p.last_name}}</h2>
+    </a>
+    <h3>From {{p.city}}</h3>
     </div>
 
-  </article>
+  </profile>
   {% endfor %}
 </main>
 {% endblock %}
