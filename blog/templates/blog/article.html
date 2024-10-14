@@ -16,14 +16,14 @@
       </p>
     </div>
 
+    {% for c in article.get_comments %}
+    <strong> by {{c.author}} at {{c.published}} </strong>
+    <p>
+      {{c.text}}
+    </p>
+
+    {% endfor %}
   </article>
 
-  {% for c in article.get_comments %}
-  <strong> by {{c.author}} at {{c.published}} </strong>
-  <p>
-    {{c.text}}
-  </p>
-
-  {% endfor %}
 </main>
 {% endblock %}

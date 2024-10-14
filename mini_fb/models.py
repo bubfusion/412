@@ -17,7 +17,7 @@ class Profile(models.Model):
     
     def __str__(self):
         '''Return a string representation of this Profile object.'''
-        return f'{self.first_name} by {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
     
 class StatusMessage(models.Model):
   profile =  models.ForeignKey("Profile", on_delete=models.CASCADE)

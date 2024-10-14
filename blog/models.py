@@ -16,7 +16,7 @@ class Article(models.Model):
     return f'{self.title} by {self.author}'
     
   def get_comments(self):
-    comments = Comment.objects.filter(article=self)
+    comments = Comment.objects.filter(article=self).order_by('-published')
 
 
 
