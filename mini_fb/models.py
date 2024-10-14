@@ -13,6 +13,7 @@ class Profile(models.Model):
     pfp_url = models.URLField(blank=True)
     
     def get_status_messages(self):
+        '''Returns statuses for users'''
         return StatusMessage.objects.filter(profile=self).order_by('-published')
     
     def __str__(self):
@@ -20,9 +21,11 @@ class Profile(models.Model):
         return f'{self.first_name} {self.last_name}'
     
 class StatusMessage(models.Model):
-  profile =  models.ForeignKey("Profile", on_delete=models.CASCADE)
+  '''Encapsulate the status message of some profile'''
+  profile =  models.ForeignKey("Profile", on_delete=models.CASCADE) #if profile deleted, statuses go with it
   message = models.TextField(blank=False)
   published = models.DateTimeField(auto_now=True)
 
   def __str__(self):
+    '''Returns string form of status'''
     return f'{self.message} at {self.published}'
