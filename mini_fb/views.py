@@ -35,3 +35,20 @@ class CreateProfileView(CreateView):
         print(self.kwargs)
         '''Return the URL to redirect to after successfully submitting form.'''
         return reverse('profile', kwargs={'pk': self.object.pk})
+    
+
+class CreateStatusMessageForm(CreateView):
+    form_class = CreateStatusForm
+    template_name = "mini_fb/create_status_form.html"
+
+    def form_valid(self, form):
+      print(form.cleaned_data)
+      profile = Profile.objects.get(pk=self.kwargs['pk'])
+      form.instance.profile = profile
+      return super().form_valid(form)
+    
+    ## also:  revise the get_success_url
+    def get_success_url(self) -> str:
+        '''Return the URL to redirect to after successfully submitting form.'''
+        #return reverse('show_all')
+        return reverse('profile', kwargs={'pk': self.kwargs['pk']})

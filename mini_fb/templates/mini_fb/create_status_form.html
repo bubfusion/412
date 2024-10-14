@@ -1,0 +1,16 @@
+{% extends 'mini_fb/base.html' %}
+
+
+{% block content %}
+<h1>Create a status</h1>
+
+<main class="grid-container">
+  <form method="POST">
+    {% csrf_token %}
+    Status message: <br>
+    <input type="text" id="message" name="message" required><br>
+    <br>
+    <input type="submit">
+  </form>
+</main>
+{% endblock %}
