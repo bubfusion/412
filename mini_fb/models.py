@@ -29,3 +29,12 @@ class StatusMessage(models.Model):
   def __str__(self):
     '''Returns string form of status'''
     return f'{self.message} at {self.published}'
+  
+  def get_images(self):
+    return Image.objects.filter(statusMessage=self)
+
+  
+class Image(models.Model):
+  statusMessage = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
+  image = models.ImageField(blank=True)
+  published = models.DateTimeField(auto_now=True)

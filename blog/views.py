@@ -62,3 +62,12 @@ class CreateCommentView(CreateView):
         '''Return the URL to redirect to after successfully submitting form.'''
         #return reverse('show_all')
         return reverse('article', kwargs={'pk': self.kwargs['pk']})
+    
+
+class CreateArticleView(CreateView):
+   form_class = CreateArticleForm
+   template_name = 'blog/create_article_form.html'
+
+   def form_valid(self,form):
+      print(f'CreateArticleView(): form.cleaned_data={form.cleaned_data}')
+      return super().form_valid(form)

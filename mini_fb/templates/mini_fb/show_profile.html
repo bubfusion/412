@@ -15,10 +15,14 @@
       {% for s in p.get_status_messages %}
       <p>
         {{s}}
+        {% for img in s.get_images %}
+        <img src="{{img.image.url}}" alt="{{img.image.url}}">
+        {% endfor %}
       </p>
       {% endfor %}
     </div>
     <a href="{% url 'create_status' p.id %}">Create a status</a>
+    <a href="{% url 'update_profile' p.id %}">Update profile</a>
     </profile.featured>
 </main>
 {% endblock %}

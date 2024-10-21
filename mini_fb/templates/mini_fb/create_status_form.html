@@ -5,10 +5,11 @@
 <h1>Create a status</h1>
 
 <main class="grid-container">
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     Status message: <br>
     <input type="text" id="message" name="message" required><br>
+    <input type="file" name="files" multiple>
     <br>
     <input type="submit">
   </form>

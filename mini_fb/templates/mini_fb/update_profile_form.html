@@ -1,0 +1,20 @@
+{% extends 'mini_fb/base.html' %}
+
+
+{% block content %}
+<h1>Update a profile</h1>
+
+<main class="grid-container">
+  <form method="POST">
+    {% csrf_token %}
+    City: <br>
+    <input type="text" id="city" name="city" value="{{p.city}}" required><br>
+    Email: <br>
+    <input type="email" id="email" name="email" value="{{p.email}}" required><br>
+    Profile picture url: <br>
+    <input type="url" id="pfp_url" name="pfp_url" value="{{p.pfp_url}}" required><br>
+    <br>
+    <input type="submit">
+  </form>
+</main>
+{% endblock %}

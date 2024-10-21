@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
 from .models import *
 from .forms import *
@@ -50,6 +50,16 @@ class CreateStatusMessageForm(CreateView):
       print(form.cleaned_data)
       profile = Profile.objects.get(pk=self.kwargs['pk']) #gets primary key for the profile
       form.instance.profile = profile
+
+      sm = form.save()
+      files = self.request.FILES.getlist('files')
+
+      for file in files:
+         image = Image()
+         image.statusMessage = sm
+         image.image = file
+         image.save()
+
       return super().form_valid(form)
     
     
@@ -57,3 +67,22 @@ class CreateStatusMessageForm(CreateView):
         '''Return the URL to redirect to after successfully submitting form.
         Sends user to profile were they created the status'''
         return reverse('profile', kwargs={'pk': self.kwargs['pk']})
+    
+
+class UpdateProfileView(UpdateView):
+    '''View for creating a profile'''
+    form_class = UpdateProfileForm
+    template_name = "mini_fb/update_profile_form.html"
+    model = Profile
+    context_object_name = 'p'
+
+    def form_valid(self, form):
+      '''Cleans data and adds it to the database on sucessful submission'''
+      profile = form.save() 
+      return super().form_valid(form)
+
+
+    def get_success_url(self) -> str:
+        '''Return the URL to redirect to after successfully submitting form.
+        Sends user to profile they created'''
+        return reverse('profile', kwargs={'pk': self.object.pk})
