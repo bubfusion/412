@@ -19,6 +19,9 @@
         <img src="{{img.image.url}}" alt="{{img.image.url}}">
         {% endfor %}
       </p>
+      <a href="{% url 'delete_status' s.id %}">
+        <button type="button">Delete</button>
+      </a>
       {% endfor %}
     </div>
     <a href="{% url 'create_status' p.id %}">Create a status</a>
