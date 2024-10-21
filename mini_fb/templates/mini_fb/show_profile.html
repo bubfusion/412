@@ -22,6 +22,10 @@
       <a href="{% url 'delete_status' s.id %}">
         <button type="button">Delete</button>
       </a>
+      <br>
+      <a href="{% url 'update_status' s.id %}">
+        <button type="button">Update</button>
+      </a>
       {% endfor %}
     </div>
     <a href="{% url 'create_status' p.id %}">Create a status</a>

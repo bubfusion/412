@@ -4,13 +4,14 @@
 
 {% block content %}
 <h1>Delete this Status?</h1>
+
 <p>
   {{sm}}
   {% for img in sm.get_images %}
   <img src="{{img.image.url}}" alt="{{img.image.url}}">
   {% endfor %}
 </p>
-
+</div>
 <a href="{% url 'profile' sm.profile.id %}">
   <button type="button">Cancel</button>
 </a>
