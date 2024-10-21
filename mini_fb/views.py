@@ -50,11 +50,12 @@ class CreateStatusMessageForm(CreateView):
       print(form.cleaned_data)
       profile = Profile.objects.get(pk=self.kwargs['pk']) #gets primary key for the profile
       form.instance.profile = profile
+      sm = form.save() #saves text
 
-      sm = form.save()
-      files = self.request.FILES.getlist('files')
 
+      files = self.request.FILES.getlist('files') #gets image files from form
       for file in files:
+        #  loops through all the images and adds them to the DB
          image = Image()
          image.statusMessage = sm
          image.image = file
@@ -70,41 +71,44 @@ class CreateStatusMessageForm(CreateView):
     
 
 class UpdateProfileView(UpdateView):
-    '''View for creating a profile'''
+    '''View for updating a profile'''
     form_class = UpdateProfileForm
     template_name = "mini_fb/update_profile_form.html"
     model = Profile
     context_object_name = 'p'
 
     def form_valid(self, form):
-      '''Cleans data and adds it to the database on sucessful submission'''
+      '''Cleans data and updates it in the database on sucessful submission'''
       profile = form.save() 
       return super().form_valid(form)
 
 
     def get_success_url(self) -> str:
-        '''Return the URL to redirect to after successfully submitting form.
-        Sends user to profile they created'''
+        '''Return the URL to the profile that was updated'''
         return reverse('profile', kwargs={'pk': self.object.pk})
     
 class DeleteStatusMessageView(DeleteView):
+   '''View for deleting a status message'''
    model = StatusMessage
    template_name = "mini_fb/delete_status_form.html"
    context_object_name = "sm"
 
    def get_success_url(self) -> str:
+    '''Returns URL back to the profile that the status was on'''
     return reverse('profile', kwargs={'pk': self.object.profile.pk})
    
 class UpdateStatusMessageView(UpdateView):
+   '''View for updating a status message'''
    form_class = UpdateStatusMessageForm
    model = StatusMessage
    template_name = "mini_fb/update_status_form.html"
-
    context_object_name = 'sm'
 
    def form_valid(self, form):
+      '''Function for saving status message to DB if form is valid'''
       sm = form.save() 
       return super().form_valid(form)
    
    def get_success_url(self) -> str:
+      '''Returns URL for the profile that the status message is on'''
       return reverse('profile', kwargs={'pk': self.object.profile.pk})

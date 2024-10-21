@@ -31,10 +31,16 @@ class StatusMessage(models.Model):
     return f'{self.message} at {self.published}'
   
   def get_images(self):
+    '''Returns all images for the status'''
     return Image.objects.filter(statusMessage=self)
 
   
 class Image(models.Model):
+  '''Encapsulate the image of some status'''
+  # foreign key is the status it is attached to
+  # zero to many
   statusMessage = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
+  # Uploaded Image
   image = models.ImageField(blank=True)
+  # Time the image was published
   published = models.DateTimeField(auto_now=True)
