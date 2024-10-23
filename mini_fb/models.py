@@ -20,6 +20,10 @@ class Profile(models.Model):
         '''Return a string representation of this Profile object.'''
         return f'{self.first_name} {self.last_name}'
     
+    def get_friends(self):
+       print(Friend.objects.filter(profile1=self))
+       return Friend.objects.filter(profile1=self)
+    
 class StatusMessage(models.Model):
   '''Encapsulate the status message of some profile'''
   profile =  models.ForeignKey("Profile", on_delete=models.CASCADE) #if profile deleted, statuses go with it
@@ -44,3 +48,12 @@ class Image(models.Model):
   image = models.ImageField(blank=True)
   # Time the image was published
   published = models.DateTimeField(auto_now=True)
+
+class Friend(models.Model):
+   '''Encapsulates a friend relationship between 2 profiles'''
+   profile1 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile1")
+   profile2 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile2")
+
+   def __str__(self):
+    '''Returns string form of status'''
+    return f'{self.profile1} & {self.profile2}'
