@@ -1,0 +1,23 @@
+{% extends 'mini_fb/base.html' %}
+
+
+
+{% block content %}
+<h1>Friend Suggestions</h1>
+
+<div class="friends">
+  <ul>
+    {% for friend in p.get_friend_suggestions %}
+    <a href="{% url 'profile' friend.id%}">
+      <li>
+        <img src="{{ friend.pfp_url }}" alt="{{ friend.first_name }}">
+        <span>{{ friend.first_name }} {{ friend.last_name }}</span>
+    </a>
+    <a href="{% url 'add_friend' p.id friend.id %}"><button type="button">Add</button></a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'profile' p.id %}"><button type="button">Back</button></a>
+</div>
+
+{% endblock %}

@@ -22,15 +22,36 @@ class Profile(models.Model):
     
     def get_friends(self):
       '''Returns all friends for this profile.'''
-      # Get friends where this profile is either profile1 or profile2
+
+      #https://docs.djangoproject.com/en/5.1/ref/models/querysets/ 
+      #for how I learned query sets
       friends_as_profile1 = Friend.objects.filter(profile1=self).values_list('profile2', flat=True)
       friends_as_profile2 = Friend.objects.filter(profile2=self).values_list('profile1', flat=True)
-      
-      # Combine both sets of friends and remove duplicates (if any)
+    
       friend_ids = set(friends_as_profile1).union(friends_as_profile2)
-      
-      # Return Profile objects, excluding the current profile
       return Profile.objects.filter(id__in=friend_ids)
+    
+    def add_friend(self, other):
+       '''Adds self and other profile as friends if not already'''
+       if self == other:
+          print("You can't friend yourself!")
+          return
+       
+       are_friends = (Friend.objects.filter(profile1=self, profile2=other).exists() or 
+                      Friend.objects.filter(profile1=other, profile2=self).exists())
+       if not are_friends:
+          Friend.objects.create(profile1=self, profile2=other)
+       else:
+          print("You are already friends with that user!")
+       return
+       
+    def get_friend_suggestions(self):
+        all_users_exlcuding_self = Profile.objects.exclude(pk=self.pk)
+        friends = self.get_friends()
+        suggestions = all_users_exlcuding_self.exclude(pk__in=friends.values_list('pk', flat=True))
+        return suggestions
+      
+      
     
 class StatusMessage(models.Model):
   '''Encapsulate the status message of some profile'''

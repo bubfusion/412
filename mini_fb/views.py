@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse
 from .models import *
 from .forms import *
 from .forms import CreateProfileForm
-
+from django.shortcuts import redirect
 
 # classed based view
 
@@ -112,3 +112,17 @@ class UpdateStatusMessageView(UpdateView):
    def get_success_url(self) -> str:
       '''Returns URL for the profile that the status message is on'''
       return reverse('profile', kwargs={'pk': self.object.profile.pk})
+
+class CreateFriendView(View):
+  '''View for adding friends'''
+  def dispatch(self, request, *args, **kwargs):
+    profile1 = Profile.objects.filter(pk=kwargs['pk']).first()
+    profile2 = Profile.objects.filter(pk=kwargs['other_pk']).first()
+    profile1.add_friend(profile2)
+    #Couldn't get reverse to work so I used this as a work around
+    return redirect('profile', pk=profile1.pk)
+  
+class ShowFriendSuggestionsView(DetailView):
+  model = Profile
+  template_name = "mini_fb/friend_suggestions.html"
+  context_object_name = 'p'
