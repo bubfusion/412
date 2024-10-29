@@ -21,8 +21,16 @@ class Profile(models.Model):
         return f'{self.first_name} {self.last_name}'
     
     def get_friends(self):
-       print(Friend.objects.filter(profile1=self))
-       return Friend.objects.filter(profile1=self)
+      '''Returns all friends for this profile.'''
+      # Get friends where this profile is either profile1 or profile2
+      friends_as_profile1 = Friend.objects.filter(profile1=self).values_list('profile2', flat=True)
+      friends_as_profile2 = Friend.objects.filter(profile2=self).values_list('profile1', flat=True)
+      
+      # Combine both sets of friends and remove duplicates (if any)
+      friend_ids = set(friends_as_profile1).union(friends_as_profile2)
+      
+      # Return Profile objects, excluding the current profile
+      return Profile.objects.filter(id__in=friend_ids)
     
 class StatusMessage(models.Model):
   '''Encapsulate the status message of some profile'''

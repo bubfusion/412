@@ -7,30 +7,54 @@
 
 <main class="grid-container">
   <profile class="featured">
-    {{p.get_friends}}
+
     <img src="{{p.pfp_url}}" alt="{{p.pfp_url}}">
     <div>
       <h2>{{p.first_name}} {{p.last_name}}</h2>
       <h3>From {{p.city}}</h3>
-      <h4>Status</h4>
-      {% for s in p.get_status_messages %}
-      <p>
-        {{s}}
-        {% for img in s.get_images %}
-        <img src="{{img.image.url}}" alt="{{img.image.url}}">
-        {% endfor %}
-      </p>
-      <a href="{% url 'delete_status' s.id %}">
-        <button type="button">Delete</button>
-      </a>
-      <br>
-      <a href="{% url 'update_status' s.id %}">
-        <button type="button">Update</button>
-      </a>
-      {% endfor %}
+
+      </profile.featured>
     </div>
-    <a href="{% url 'create_status' p.id %}">Create a status</a>
-    <a href="{% url 'update_profile' p.id %}">Update profile</a>
-    </profile.featured>
+    <div class="status-messages">
+      <h4>Status</h4>
+      <ul>
+        {% for s in p.get_status_messages %}
+        <p>
+          <li>
+            {{s}}
+            {% for img in s.get_images %}
+            <img src="{{img.image.url}}" alt="{{img.image.url}}">
+            {% endfor %}
+        </p>
+        <a href="{% url 'delete_status' s.id %}">
+          <button type="button">Delete</button>
+        </a>
+        <br>
+        <a href="{% url 'update_status' s.id %}">
+          <button type="button">Update</button>
+        </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="friends">
+      <h4>Friends</h4>
+      <ul>
+        {% for friend in p.get_friends %}
+        <a href="{% url 'profile' friend.id%}">
+          <li>
+            <img src="{{ friend.pfp_url }}" alt="{{ friend.first_name }}">
+            <span>{{ friend.first_name }} {{ friend.last_name }}</span>
+          </li>
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      <a href="{% url 'create_status' p.id %}">Create a status</a>
+      <a href="{% url 'update_profile' p.id %}">Update profile</a>
+    </div>
+
+
 </main>
 {% endblock %}

@@ -67,6 +67,115 @@ nav li {
   display: inline;
 }
 
+.friends {
+  background: #f3f7f7;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.friends h4 {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 1.2em;
+}
+
+.friends ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.friends ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  text-align: center;
+}
+
+.friends ul li img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+.friends ul li span {
+  font-size: 0.75em;
+  color: #333;
+}
+
+.friends a {
+  text-decoration: none;
+}
+
+.status-messages {
+  background: #f9fafa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.status-messages h4 {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 1.1em;
+}
+
+.status-messages ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.status-messages ul li {
+  display: flex;
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.status-messages ul li img {
+  max-width: 75;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.status-messages ul li .status-text {
+  font-size: 0.85em;
+  color: #333;
+  line-height: 1.4;
+}
+
+.status-messages ul li .status-actions {
+  margin-top: 5px;
+}
+
+.status-messages ul li .status-actions a button {
+  font-size: 0.75em;
+  padding: 4px 8px;
+  margin-right: 5px;
+  background-color: #d1dedd;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.status-messages ul li .status-actions a button:hover {
+  background-color: #b0c4c4;
+}
+
 /* responsive styles: adapt to smaller screen sizes */
 @media screen and (max-width: 980px) {
 
