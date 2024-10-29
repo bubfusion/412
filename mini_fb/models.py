@@ -39,6 +39,7 @@ class Profile(models.Model):
        
        are_friends = (Friend.objects.filter(profile1=self, profile2=other).exists() or 
                       Friend.objects.filter(profile1=other, profile2=self).exists())
+       
        if not are_friends:
           Friend.objects.create(profile1=self, profile2=other)
        else:
@@ -46,10 +47,29 @@ class Profile(models.Model):
        return
        
     def get_friend_suggestions(self):
-        all_users_exlcuding_self = Profile.objects.exclude(pk=self.pk)
-        friends = self.get_friends()
-        suggestions = all_users_exlcuding_self.exclude(pk__in=friends.values_list('pk', flat=True))
-        return suggestions
+      '''Gets suggested friends for a user '''
+      
+      # Very simple way of doing this. It just gets all of the users minus current
+      # profile and current friends and returns them
+      all_users_exlcuding_self = Profile.objects.exclude(pk=self.pk)
+      friends = self.get_friends()
+      suggestions = all_users_exlcuding_self.exclude(pk__in=friends.values_list('pk', flat=True))
+      return suggestions
+    
+    def get_news_feed(self):
+      '''Returns the news feed for a profile'''
+      
+      #Gets friends and statuses for current user
+      all_status = StatusMessage.objects.filter(profile=self)
+      friends = self.get_friends()
+      
+      # Appends statuses of all friends to the list
+      for friend in friends:
+        all_status = all_status | StatusMessage.objects.filter(profile=friend)
+        
+      all_status = all_status.order_by('-published').distinct()
+      return all_status
+      
       
       
     

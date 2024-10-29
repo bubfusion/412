@@ -123,6 +123,13 @@ class CreateFriendView(View):
     return redirect('profile', pk=profile1.pk)
   
 class ShowFriendSuggestionsView(DetailView):
+  '''View for suggesting friends'''
   model = Profile
   template_name = "mini_fb/friend_suggestions.html"
+  context_object_name = 'p'
+  
+class ShowNewsFeedView(DetailView):
+  '''View for showing a newsfeed of a profile'''
+  model = Profile
+  template_name = "mini_fb/news_feed.html"
   context_object_name = 'p'

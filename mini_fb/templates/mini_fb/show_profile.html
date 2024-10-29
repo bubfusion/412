@@ -50,6 +50,7 @@
         {% endfor %}
       </ul>
       <a href="{% url 'friend_suggestions' p.id %}"><button type="button">Friend suggestions</button></a>
+      <a href="{% url 'news_feed' p.id %}"><button type="button">News feed</button></a>
     </div>
     <div>
       <a href="{% url 'create_status' p.id %}">Create a status</a>
