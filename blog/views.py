@@ -7,7 +7,7 @@ from .models import *
 from .forms import *
 from .forms import CreateCommentForm
 from django.urls import reverse
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # classed based view
@@ -16,6 +16,10 @@ class ShowAllView(ListView):
   model = Article
   template_name = 'blog/show_all.html'
   context_object_name = 'articles'
+  
+  def dispatch(self, *args, **kwargs):
+    print(f"ShowAllView.dispatch; request.user={self.request.user}")
+    return super().dispatch(*args, **kwargs)
 
 
 class RandomArticleView(DetailView):
@@ -64,10 +68,14 @@ class CreateCommentView(CreateView):
         return reverse('article', kwargs={'pk': self.kwargs['pk']})
     
 
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView):
    form_class = CreateArticleForm
    template_name = 'blog/create_article_form.html'
 
+   def get_login_url(self) -> str:
+      return reverse('login')
    def form_valid(self,form):
+      user = self.request.user
+      form.instance.user = user
       print(f'CreateArticleView(): form.cleaned_data={form.cleaned_data}')
       return super().form_valid(form)
