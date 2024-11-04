@@ -1,5 +1,7 @@
 import random
-from django.shortcuts import render
+from django.http.request import HttpRequest as HttpRequest
+from django.http.response import HttpResponse as HttpResponse
+from django.shortcuts import render, redirect
 
 from django.views.generic import ListView, DetailView, CreateView
 from django import forms
@@ -7,7 +9,10 @@ from .models import *
 from .forms import *
 from .forms import CreateCommentForm
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
 
 
 # classed based view
@@ -79,3 +84,21 @@ class CreateArticleView(LoginRequiredMixin, CreateView):
       form.instance.user = user
       print(f'CreateArticleView(): form.cleaned_data={form.cleaned_data}')
       return super().form_valid(form)
+    
+    
+class RegistrationView(CreateView):
+  template_name = 'blog/register.html'
+  form_class = UserCreationForm 
+  
+  def dispatch(self, request, *args, **kwargs) -> HttpResponse:
+  
+     if self.request.POST:
+       print(self.request.POST)
+       form = UserCreationForm(self.request.POST)
+       if not form.is_valid():
+        return super().dispatch(request, *args, **kwargs)
+       user = form.save()
+       login(self.request, user)
+       return redirect(reverse('show_all_articles'))
+     #does get  
+     return super().dispatch(request, *args, **kwargs)

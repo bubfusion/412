@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # This Profile model will need to include the following data attributes: 
@@ -6,6 +7,7 @@ from django.db import models
 class Profile(models.Model):
     '''Encapsulate the profile of some user'''
     # data attributes of a Profile:
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
     city = models.TextField(blank=False)

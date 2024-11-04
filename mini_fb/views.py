@@ -6,6 +6,7 @@ from .models import *
 from .forms import *
 from .forms import CreateProfileForm
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # classed based view
 
@@ -22,7 +23,7 @@ class ShowProfilePageView(DetailView):
   context_object_name = 'p'
 
 
-class CreateProfileView(CreateView):
+class CreateProfileView(LoginRequiredMixin, CreateView):
     '''View for creating a profile'''
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
@@ -40,7 +41,7 @@ class CreateProfileView(CreateView):
         return reverse('profile', kwargs={'pk': self.object.pk})
     
 
-class CreateStatusMessageForm(CreateView):
+class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
     '''Class for creating status messages for profiles'''
     form_class = CreateStatusForm
     template_name = "mini_fb/create_status_form.html"
@@ -70,7 +71,7 @@ class CreateStatusMessageForm(CreateView):
         return reverse('profile', kwargs={'pk': self.kwargs['pk']})
     
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     '''View for updating a profile'''
     form_class = UpdateProfileForm
     template_name = "mini_fb/update_profile_form.html"
@@ -87,7 +88,7 @@ class UpdateProfileView(UpdateView):
         '''Return the URL to the profile that was updated'''
         return reverse('profile', kwargs={'pk': self.object.pk})
     
-class DeleteStatusMessageView(DeleteView):
+class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
    '''View for deleting a status message'''
    model = StatusMessage
    template_name = "mini_fb/delete_status_form.html"
@@ -97,7 +98,7 @@ class DeleteStatusMessageView(DeleteView):
     '''Returns URL back to the profile that the status was on'''
     return reverse('profile', kwargs={'pk': self.object.profile.pk})
    
-class UpdateStatusMessageView(UpdateView):
+class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
    '''View for updating a status message'''
    form_class = UpdateStatusMessageForm
    model = StatusMessage
@@ -113,7 +114,7 @@ class UpdateStatusMessageView(UpdateView):
       '''Returns URL for the profile that the status message is on'''
       return reverse('profile', kwargs={'pk': self.object.profile.pk})
 
-class CreateFriendView(View):
+class CreateFriendView(LoginRequiredMixin, View):
   '''View for adding friends'''
   def dispatch(self, request, *args, **kwargs):
     profile1 = Profile.objects.filter(pk=kwargs['pk']).first()
@@ -122,13 +123,13 @@ class CreateFriendView(View):
     #Couldn't get reverse to work so I used this as a work around
     return redirect('profile', pk=profile1.pk)
   
-class ShowFriendSuggestionsView(DetailView):
+class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
   '''View for suggesting friends'''
   model = Profile
   template_name = "mini_fb/friend_suggestions.html"
   context_object_name = 'p'
   
-class ShowNewsFeedView(DetailView):
+class ShowNewsFeedView(LoginRequiredMixin, DetailView):
   '''View for showing a newsfeed of a profile'''
   model = Profile
   template_name = "mini_fb/news_feed.html"

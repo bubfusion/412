@@ -1,7 +1,6 @@
 {% extends 'mini_fb/base.html' %}
 
 
-
 {% block content %}
 <h1>Show all profiles</h1>
 
@@ -26,6 +25,7 @@
             <img src="{{img.image.url}}" alt="{{img.image.url}}">
             {% endfor %}
         </p>
+        {% if user.is_authenticated and user.pk == p.id%}
         <a href="{% url 'delete_status' s.id %}">
           <button type="button">Delete</button>
         </a>
@@ -33,6 +33,7 @@
         <a href="{% url 'update_status' s.id %}">
           <button type="button">Update</button>
         </a>
+        {% endif %}
         </li>
         {% endfor %}
       </ul>
@@ -49,12 +50,16 @@
         </a>
         {% endfor %}
       </ul>
+      {% if user.is_authenticated and user.pk == p.id%}
       <a href="{% url 'friend_suggestions' p.id %}"><button type="button">Friend suggestions</button></a>
       <a href="{% url 'news_feed' p.id %}"><button type="button">News feed</button></a>
+      {% endif %}
     </div>
     <div>
+      {% if user.is_authenticated and user.pk == p.id%}
       <a href="{% url 'create_status' p.id %}">Create a status</a>
       <a href="{% url 'update_profile' p.id %}">Update profile</a>
+      {% endif %}
     </div>
 
 
