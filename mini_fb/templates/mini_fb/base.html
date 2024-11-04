@@ -11,7 +11,17 @@
   <nav>
     <ul>
       <li><a href="{% url 'show_all' %}">Home</a></li>
+      {% if user.is_authenticated%}
       <li><a href="{% url 'create_profile' %}">Create Profile</a></li>
+      <li>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      {% endif %}
     </ul>
   </nav>
 </header>

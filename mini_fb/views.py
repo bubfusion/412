@@ -49,7 +49,7 @@ class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
       '''Cleans data and adds it to the database on sucessful submission'''
       print(form.cleaned_data)
-      profile = Profile.objects.get(pk=self.kwargs['pk']) #gets primary key for the profile
+      profile = Profile.objects.get(user=self.request.user) #gets primary key for the profile
       form.instance.profile = profile
       sm = form.save() #saves text
 
@@ -65,10 +65,13 @@ class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
       return super().form_valid(form)
     
     
+    def get_object(self):
+      return Profile.objects.get(user=self.request.user)
+    
     def get_success_url(self) -> str:
-        '''Return the URL to redirect to after successfully submitting form.
-        Sends user to profile were they created the status'''
-        return reverse('profile', kwargs={'pk': self.kwargs['pk']})
+      '''Returns URL for the profile that the status message is on'''
+      return reverse('profile', kwargs={'pk': self.object.profile.pk})
+      
     
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
@@ -82,6 +85,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
       '''Cleans data and updates it in the database on sucessful submission'''
       profile = form.save() 
       return super().form_valid(form)
+    
+    def get_object(self):
+      return Profile.objects.get(user=self.request.user)
 
 
     def get_success_url(self) -> str:
@@ -117,11 +123,14 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
 class CreateFriendView(LoginRequiredMixin, View):
   '''View for adding friends'''
   def dispatch(self, request, *args, **kwargs):
-    profile1 = Profile.objects.filter(pk=kwargs['pk']).first()
+    profile1 = Profile.objects.filter(user=self.request.user).first()
     profile2 = Profile.objects.filter(pk=kwargs['other_pk']).first()
     profile1.add_friend(profile2)
     #Couldn't get reverse to work so I used this as a work around
     return redirect('profile', pk=profile1.pk)
+  
+  def get_object(self):
+    return Profile.objects.get(user=self.request.user)
   
 class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
   '''View for suggesting friends'''
@@ -129,8 +138,15 @@ class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
   template_name = "mini_fb/friend_suggestions.html"
   context_object_name = 'p'
   
+  def get_object(self):
+    return Profile.objects.get(user=self.request.user)
+
+  
 class ShowNewsFeedView(LoginRequiredMixin, DetailView):
   '''View for showing a newsfeed of a profile'''
   model = Profile
   template_name = "mini_fb/news_feed.html"
   context_object_name = 'p'
+  
+  def get_object(self):
+    return Profile.objects.get(user=self.request.user)

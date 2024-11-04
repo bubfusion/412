@@ -13,7 +13,7 @@
         <img src="{{ friend.pfp_url }}" alt="{{ friend.first_name }}">
         <span>{{ friend.first_name }} {{ friend.last_name }}</span>
     </a>
-    <a href="{% url 'add_friend' p.id friend.id %}"><button type="button">Add</button></a>
+    <a href="{% url 'add_friend' friend.id %}"><button type="button">Add</button></a>
     </li>
     {% endfor %}
   </ul>
