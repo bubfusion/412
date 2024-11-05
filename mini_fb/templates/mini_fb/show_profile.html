@@ -25,6 +25,7 @@
             <img src="{{img.image.url}}" alt="{{img.image.url}}">
             {% endfor %}
         </p>
+        <!-- Hides options if logged in user isn't the profile owner -->
         {% if user.is_authenticated and user.pk == p.user.id%}
         <a href="{% url 'delete_status' s.id %}">
           <button type="button">Delete</button>
@@ -50,12 +51,14 @@
         </a>
         {% endfor %}
       </ul>
+      <!-- Hides options if logged in user isn't the profile owner -->
       {% if user.is_authenticated and user.pk == p.user.id%}
       <a href="{% url 'friend_suggestions' %}"><button type="button">Friend suggestions</button></a>
       <a href="{% url 'news_feed'%}"><button type="button">News feed</button></a>
       {% endif %}
     </div>
     <div>
+      <!-- Hides options if logged in user isn't the profile owner -->
       {% if user.is_authenticated and user.pk == p.user.id%}
       <a href="{% url 'create_status'  %}">Create a status</a>
       <a href="{% url 'update_profile' %}">Update profile</a>

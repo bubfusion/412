@@ -33,12 +33,17 @@ class CreateProfileView(CreateView):
 
     def form_valid(self, form):
       '''Cleans data and adds it to the database on sucessful submission'''
+      
+      # gets instance of account form
       user_creation_form = UserCreationForm(self.request.POST)
       user = user_creation_form.save()
       profile = form.instance
+      
+      # Sets fk to newly created user
       profile.user = user
       
-      login(self.request, user)
+      # Logs user in after making account
+      login(self.request, user) 
       
       return super().form_valid(form)
 
@@ -49,10 +54,11 @@ class CreateProfileView(CreateView):
         return reverse('profile', kwargs={'pk': self.object.pk})
       
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_creation_form = UserCreationForm()
-        context['user_creation_form'] = user_creation_form
-        return context
+      '''Gets the context for user creation form'''
+      context = super().get_context_data(**kwargs)
+      user_creation_form = UserCreationForm()
+      context['user_creation_form'] = user_creation_form
+      return context
     
 
 class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
@@ -80,6 +86,7 @@ class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
     
     
     def get_object(self):
+      '''Returns the logged in user object'''
       return Profile.objects.get(user=self.request.user)
     
     def get_success_url(self) -> str:
@@ -101,6 +108,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
       return super().form_valid(form)
     
     def get_object(self):
+      '''Returns the logged in user object'''
       return Profile.objects.get(user=self.request.user)
 
 
@@ -144,6 +152,7 @@ class CreateFriendView(LoginRequiredMixin, View):
     return redirect('profile', pk=profile1.pk)
   
   def get_object(self):
+    '''Returns the logged in user object'''
     return Profile.objects.get(user=self.request.user)
   
 class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
@@ -153,6 +162,7 @@ class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
   context_object_name = 'p'
   
   def get_object(self):
+    '''Returns the logged in user object'''
     return Profile.objects.get(user=self.request.user)
 
   
@@ -163,4 +173,5 @@ class ShowNewsFeedView(LoginRequiredMixin, DetailView):
   context_object_name = 'p'
   
   def get_object(self):
+    '''Returns the logged in user object'''
     return Profile.objects.get(user=self.request.user)

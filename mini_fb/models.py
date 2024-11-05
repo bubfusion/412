@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     '''Encapsulate the profile of some user'''
     # data attributes of a Profile:
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #fk to a user account
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
     city = models.TextField(blank=False)
