@@ -7,6 +7,8 @@ from .forms import *
 from .forms import CreateProfileForm
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # classed based view
 
@@ -23,7 +25,7 @@ class ShowProfilePageView(DetailView):
   context_object_name = 'p'
 
 
-class CreateProfileView(LoginRequiredMixin, CreateView):
+class CreateProfileView(CreateView):
     '''View for creating a profile'''
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
@@ -31,7 +33,13 @@ class CreateProfileView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
       '''Cleans data and adds it to the database on sucessful submission'''
-      profile = form.save() 
+      user_creation_form = UserCreationForm(self.request.POST)
+      user = user_creation_form.save()
+      profile = form.instance
+      profile.user = user
+      
+      login(self.request, user)
+      
       return super().form_valid(form)
 
 
@@ -39,6 +47,12 @@ class CreateProfileView(LoginRequiredMixin, CreateView):
         '''Return the URL to redirect to after successfully submitting form.
         Sends user to profile they created'''
         return reverse('profile', kwargs={'pk': self.object.pk})
+      
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_creation_form = UserCreationForm()
+        context['user_creation_form'] = user_creation_form
+        return context
     
 
 class CreateStatusMessageForm(LoginRequiredMixin, CreateView):
