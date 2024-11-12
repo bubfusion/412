@@ -34,11 +34,10 @@ def load_data():
     f.readline()
     for line in f:
         fields = line.split(',')
-        # show which value in each field
-                
-        # create a new instance of Result object with this record from CSV
+        # try-catch incase adding a voter fails
         try:
           voter = Voter(
+                        #Personal info
                         last_name = fields[1].strip(),
                         first_name = fields[2].strip(),
                         street_number = fields[3].strip(),
@@ -58,7 +57,7 @@ def load_data():
                         v23town = fields[15].strip().lower() in ['true'],
                         voter_score = fields[16],
           )
-          voter.save()
+          voter.save() #Saves voter to the db
           print(f'Created result: {voter}')
         except:
           print(f"Skipped: {fields}")
