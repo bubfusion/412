@@ -5,5 +5,6 @@ from . import views
 # URL paths for mini_fb
 urlpatterns = [
   path(r'', views.ShowAllView.as_view(), name = "voters"),
-  path(r'/voter/<int:pk>', views.ShowVoterView.as_view(), name = "voter")
+  path(r'voter/<int:pk>', views.ShowVoterView.as_view(), name = "voter"),
+  path(r'graphs', views.GraphView.as_view(), name = "graphs")
 ]
