@@ -1,0 +1,25 @@
+{% load static %}
+
+<!-- Loads and uses stylesheet -->
+<link rel="stylesheet" href="{% static 'styles-fb.css' %}">
+
+<!-- HTML doc type and header -->
+<!DOCTYPE html>
+<html>
+
+<header>
+  <nav>
+    <ul>
+      <!-- Things to show to all users -->
+      <li><a href="{% url 'voters' %}">Home</a></li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+  {% block content %}
+
+  {% endblock content %}
+</body>
+
+</html>
