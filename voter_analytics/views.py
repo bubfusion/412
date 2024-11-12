@@ -110,6 +110,8 @@ class GraphView(ListView):
     context = super().get_context_data(**kwargs)
     qs = self.get_queryset()
     
+    context['years'] = range(1900, 2006)
+    
     # How I found out about count
     # https://stackoverflow.com/questions/11418522/django-how-to-annotate-queryset-with-count-of-filtered-foreignkey-field
     affiliation_counts = (
@@ -152,8 +154,26 @@ class GraphView(ListView):
                                          
     )
     
-    context['graph_voter_participation'] = graph_voter_participation
+    dob_counts = (
+      qs.values('dob__year').annotate(count=Count('dob__year')).order_by('dob__year')
+    )
+    
+    x = [item['dob__year'] for item in dob_counts]
+    y = [item['count'] for item in dob_counts]
+    
+    fig = go.Bar(x=x, y=y)
+    title_text="Voter Distribution by Birth Year"
+    
+    graph_voter_birth_year_distribution = plotly.offline.plot(
+    {"data": [fig], 
+    "layout_title_text": title_text,
+    }, auto_open=False, output_type="div",
+    )
     
     context['graph_voter_affiliation_distribution'] = graph_voter_affiliation_distribution
+    
+    context['graph_voter_participation'] = graph_voter_participation
+    
+    context['graph_voter_birth_year_distribution'] = graph_voter_birth_year_distribution
     
     return context
