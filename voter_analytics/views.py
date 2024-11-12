@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Voter
 
 class ShowAllView(ListView):
@@ -51,3 +51,10 @@ class ShowAllView(ListView):
     context = super().get_context_data(**kwargs)
     context['years'] = range(1900, 2006)
     return context
+
+class ShowVoterView(DetailView):
+  '''Class for the /voter/<int:pk> page that shows a singular voter'''
+  model = Voter
+  template_name = 'voter_analytics/voter.html'
+  context_object_name = 'voter'
+  

@@ -117,6 +117,7 @@
     <th>Date of Birth</th>
     <th>Party Affiliation</th>
     <th>Voter Score</th>
+    <th>Profile Link</th>
   </tr>
   {% for voter in voters %}
   <tr>
@@ -126,6 +127,7 @@
     <td>{{voter.dob}}</td>
     <td>{{voter.party_affiliation}}</td>
     <td>{{voter.voter_score}}</td>
+    <td><a href="{% url 'voter' voter.id %}">Link</a></td>
   </tr>
   {% endfor %}
 </table>
