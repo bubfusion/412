@@ -1,0 +1,155 @@
+{% extends "tactoss/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="grid-container">
+  <h1>
+    <br>
+    <img src="https://i.imgur.com/dOc0xAv.png" alt="Tactical Toss Tutor" width="400">
+    <br>
+    Tactical Toss Tutor
+    <br>
+  </h1>
+
+  <h4>Enhance your Counter-Strike 2 skills with Tactical Toss Tutor, a discord bot. TTT is the ultimate companion for
+    swift and efficient mastery of smoke lineups, ensuring you dominate the match with precision and speed!</h4>
+
+  <p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1194043397451808868"><img
+        src="https://img.shields.io/badge/Invite-greenblue?style=for-the-badge&logo=Discord&logoColor=white"
+        alt="Invite" width="12%"></a>
+    <a href="https://discord.gg/h572hfZDBh"><img
+        src="https://img.shields.io/badge/Join-blue?style=for-the-badge&logo=Discord&logoColor=white" alt="Join"
+        width="10%"></a>
+    <a href="https://github.com/bubfusion/Tactical-Toss-Tutor"><img
+        src="https://img.shields.io/badge/Github-white?style=for-the-badge&logo=github&logoColor=black" alt="Github"
+        width="12.5%"></a>
+  </p>
+
+  <p>
+    <a href="#key-features">Key Features</a> •
+    <a href="#how-to-use">How To Use</a> •
+    <a href="#commands">Commands</a> •
+    <a href="#support">Support</a> •
+    <a href="#license">License</a>
+  </p>
+  <p>
+    <img src="{% static 'gif.gif' %}" alt="Preview" width="80%">
+  </p>
+
+  <h2 id="key-features">Key Features</h2>
+  <ul>
+    <li>Instantly get smokes for your favorite maps</li>
+    <li>See currently available maps</li>
+    <li>View all the lineups for maps</li>
+    <li>Easy to follow, high quality, and quick GIFs</li>
+    <li>24/7 bot runtime!</li>
+  </ul>
+
+  <h2 id="how-to-use">How To Use</h2>
+
+  <h4>Method 1:</h4>
+  <p>Getting this bot in your discord is as easy as just inviting it! Below is a button you can click to add the bot to
+    your
+    server<br>
+    <a href="https://discord.com/oauth2/authorize?client_id=1194043397451808868"><img
+        src="https://img.shields.io/badge/Invite-greenblue?style=for-the-badge&logo=Discord&logoColor=white"
+        alt="Invite" width="11%"></a>
+  </p>
+
+  <h4>Method 2:</h4>
+  <p>If you do not have a server you can add the bot to, join the official Tactical Toss Tutor one!<br>
+    <a href="https://discord.gg/h572hfZDBh"><img
+        src="https://img.shields.io/badge/Join-blue?style=for-the-badge&logo=Discord&logoColor=white" alt="Join"
+        width="10%"></a>
+  </p>
+
+  <h4>Method 3:</h4>
+  <p>Since this is an open source program, you can run the bot yourself! </p>
+  <p><strong>Prerequisites</strong><br>
+    <a href="https://github.com/bubfusion/Tactical-Toss-Tutor">Tactical Toss Tutor Repo</a><br>
+    <a href="https://www.python.org/downloads/">Python 3</a><br>
+    <a href="https://discordpy.readthedocs.io/en/stable/intro.html">Discord.py</a><br>
+    <a href="https://discord.com/developers/docs/getting-started">Discord Bot Account</a><br>
+    <a href="https://pypi.org/project/discord-pretty-help/">Discord Pretty Help</a>
+  </p>
+
+  <p><strong>Installation</strong><br>
+    Step 1: Clone the repo<br>
+    Step 2: Create a <code>config.py</code> in your repo folder and add the line below<br>
+    <code>BOT_TOKEN = "YOUR BOT'S TOKEN HERE"</code><br>
+    Step 3: Run <code>bot.py</code>
+  </p>
+
+  <h2 id="commands">Commands</h2>
+  <p>See available maps:<br>
+    <code>/maps</code>
+  </p>
+
+  <p>View lineup for specific map:<br>
+    <code>/lineups &lt;map&gt;</code>
+  </p>
+
+  <p>Get a GIF for a specific area you want to smoke<br>
+    <code>/smoke &lt;map&gt; &lt;area&gt;</code>
+  </p>
+
+  <p>View commands<br>
+    <code>/help</code>
+  </p>
+
+  <p>Invite the bot to your own server<br>
+    <code>/invite</code>
+  </p>
+
+  <p>Join the official Tactical Toss Tutor<br>
+    <code>/join</code>
+  </p>
+
+  <p>Link to the Tactical Toss Tutor website<br>
+    <code>/info</code>
+  </p>
+
+  <p><strong>More coming soon!</strong></p>
+
+  <h2 id="support">Support</h2>
+  <p>Need help with the bot, have a suggestion, or don't have a server you can add the bot to? Join the discord with the
+    button below!</p>
+
+  <a href="https://discord.gg/h572hfZDBh"><img
+      src="https://img.shields.io/badge/Join-blue?style=for-the-badge&logo=Discord&logoColor=white" alt="Join"
+      width="10%"></a>
+
+  <h2 id="license">License</h2>
+  <p>MIT</p>
+
+  <h2>Terms Of Service (for the hosted discord bot)</h2>
+  <h3>Conditions</h3>
+  <p>General conditions regarding Tactical Toss Tutor bot are under this topic.</p>
+  <ol>
+    <li>Our terms and conditions apply every user of Tactical Toss Tutor.</li>
+    <li>By adding Tactical Toss Tutor in your server, you agree to these terms of service and the future terms which we
+      may add after a notice.</li>
+  </ol>
+
+  <h3>Terms of Use</h3>
+  <ol>
+    <li>Intentional command spam or attempts to crash the bot should not be made.</li>
+    <li>Tactical Toss Tutor should not be used in bot spam servers which cause command spam.</li>
+    <li>We reserve the rights to prohibit any server or user from using Tactical Toss Tutor.</li>
+    <li>The client is responsible for any violation caused by them.</li>
+    <li>We have the rights to update terms of service anytime with a notice in the support server.</li>
+  </ol>
+
+  <h2>Privacy Policy</h2>
+  <p>No personal data is collected or shared to any third party, under any circumstances.</p>
+
+  <hr>
+
+  <p>
+    GitHub: <a href="https://github.com/bubfusion">@bubfusion</a><br>
+    Discord: Bubfusion
+  </p>
+</main>
+
+{% endblock content %}

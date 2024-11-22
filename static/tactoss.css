@@ -1,0 +1,56 @@
+/* This CSS was derived from NetNinja's multi-column grid example. */
+
+body {
+  margin: 30px;
+  background: #0d1117;
+  color: white;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+ul,
+li {
+  padding: 0px;
+  list-style-type: none;
+}
+
+h1,
+h2,
+header {
+  max-width: 1200px;
+  margin: 40px auto;
+  border-bottom: 1px solid #bbc7c7;
+}
+
+.grid-container {
+  max-width: 900px;
+  display: grid;
+  /* grid-template-columns: 300px 300px 300px; */
+  grid-gap: 10px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+
+
+/* responsive styles: adapt to smaller screen sizes */
+@media screen and (max-width: 980px) {
+
+  profile {
+    grid-column: span 1;
+    display: grid;
+    /* nested grid */
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 760px) {
+
+  profile,
+  profile.featured {
+
+    display: block;
+    margin: 0px 20px;
+  }
+}
