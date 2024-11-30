@@ -1,0 +1,18 @@
+{% extends "tactoss/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="grid-container">
+
+  {% for team in teams %}
+  {% if team.is_open %}
+  <p>{{team.team_leader.display_name}}'s team</p>
+  {% endif %}
+  <a href="{% url 'join_team' team.id %}">
+    <button type="button">Join</button>
+  </a>
+  {% endfor %}
+
+</main>
+
+{% endblock content %}

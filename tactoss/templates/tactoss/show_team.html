@@ -1,0 +1,62 @@
+{% extends "tactoss/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="grid-container">
+
+  <h2>{{team.team_leader.display_name}}'s team</h2>
+
+
+  <h3>Name: {{team.team_leader.display_name}}</h3>
+  {% if team.team_leader.discord_username %}
+  <p>Discord username: {{team.team_leader.discord_username}}</p>
+  {% endif %}
+  {% if team.team_leader.steam_url %}
+  <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
+  {% endif %}
+
+
+  {% if team.account_2 %}
+  <h3>Name: {{team.account_2.display_name}}</h3>
+  {% if team.account_2.discord_username %}
+  <p>Discord username: {{team.account_2.discord_username}}</p>
+  {% endif %}
+  {% if team.account_2.steam_url %}
+  <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
+  {% endif %}
+  {% endif %}
+
+  {% if team.account_3 %}
+  <h3>Name: {{team.account_3.display_name}}</h3>
+  {% if team.account_3.discord_username %}
+  <p>Discord username: {{team.account_3.discord_username}}</p>
+  {% endif %}
+  {% if team.account_3.steam_url %}
+  <p>Steam profile: <a href={{team.account_3.steam_url}}>link</a></p>
+  {% endif %}
+  {% endif %}
+
+  {% if team.account_4 %}
+  <h3>Name: {{team.account_4.display_name}}</h3>
+  {% if team.account_4.discord_username %}
+  <p>Discord username: {{team.account_4.discord_username}}</p>
+  {% endif %}
+  {% if team.account_4.steam_url %}
+  <p>Steam profile: <a href={{team.account_4.steam_url}}>link</a></p>
+  {% endif %}
+  {% endif %}
+
+  {% if team.account_5 %}
+  <h3>Name: {{team.account_5.display_name}}</h3>
+  {% if team.account_5.discord_username %}
+  <p>Discord username: {{team.account_5.discord_username}}</p>
+  {% endif %}
+  {% if team.account_5.steam_url %}
+  <p>Steam profile: <a href={{team.account_5.steam_url}}>link</a></p>
+  {% endif %}
+  {% endif %}
+
+
+</main>
+
+{% endblock content %}

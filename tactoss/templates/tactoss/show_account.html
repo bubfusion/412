@@ -1,0 +1,19 @@
+{% extends "tactoss/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="grid-container">
+  <img src="{{account.account_picture.url}}" alt="{{account.display_name}}'s profile picture">
+  <p>{{account.display_name}}'s profile</p>
+  <p>Member since {{account.join_date}}</p>
+  {% if account.discord_username %}
+  <p>Discord username: {{account.discord_username}}</p>
+  {% endif %}
+  {% if account.steam_url %}
+  <p>Steam profile: <a href={{account.steam_url}}>link</a></p>
+  {% endif %}
+
+
+</main>
+
+{% endblock content %}
