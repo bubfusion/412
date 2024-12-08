@@ -64,21 +64,43 @@ class Team(models.Model):
   # Sets if the team is open for new players to join/is visable on page
   is_open = models.BooleanField()
   
+  def slot_open(self):
+    if self.is_open == False:
+      return False
+    elif self.account_2 != None and self.account_3  != None and self.account_4 != None and self.account_5 != None:
+      return False
+    else:
+      return True
+  
+  def in_team_already(self, account):
+    if self.account_2 == account:
+      return True
+    elif self.account_3 == account:
+      return True
+    elif self.account_4 == account:
+      return True
+    elif self.account_5 == account:
+      return True
+    else:
+      return False
+    
+  
+  def add_player(self, account):
+    if self.account_2 == None:
+      self.account_2 = account
+    elif self.account_3 == None:
+      self.account_3 = account
+    elif self.account_4 == None:
+      self.account_4 = account
+    elif self.account_5 == None:
+      self.account_5 = account
+    self.save()
+      
   def __str__(self):
     '''Returns string form of a team'''
     return f'{self.team_leader}\'s team'
   
-  def get_open_slot(self):
-    if self.account_2:
-      return self.account_2
-    elif self.account_3:
-      return self.account_3
-    elif self.account_4:
-      return self.account_4
-    elif self.account_5:
-      return self.account_5
-    else:
-      return None
+
 
   
 class SmokeGif(models.Model):

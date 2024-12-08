@@ -5,6 +5,8 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 
+from django.shortcuts import redirect
+
 
 
 class ShowHome(TemplateView):
@@ -29,15 +31,19 @@ class ShowTeamsView(ListView):
   template_name = "tactoss/teams.html"
   context_object_name = 'teams'
   
-class CreateFriendView(LoginRequiredMixin, View):
-  '''View for adding friends'''
+class JoinTeamView(LoginRequiredMixin, View):
+  '''View for joining a team'''
   def dispatch(self, request, *args, **kwargs):
-    profile1 = Profile.objects.filter(user=self.request.user).first()
-    profile2 = Profile.objects.filter(pk=kwargs['other_pk']).first()
-    profile1.add_friend(profile2)
-    #Couldn't get reverse to work so I used this as a work around
-    return redirect('profile', pk=profile1.pk)
-  
-  def get_object(self):
-    '''Returns the logged in user object'''
-    return Profile.objects.get(user=self.request.user)
+    account = Account.objects.filter(user=self.request.user).first()
+    print(account)
+    team = Team.objects.filter(pk=kwargs['pk']).first()
+    print(account)
+    if team.in_team_already(account) == False and team.slot_open():
+      print("success")
+      team.add_player(account)
+    
+    if team.slot_open() == False:
+      team.slot_open = False
+      team.save()
+    return redirect('team', pk=team.pk)
+    
