@@ -3,9 +3,44 @@
 
 {% block content %}
 <main class="grid-container">
-  {% for requests in account.get_outbound_requests() %}
-  hello
-  {% endfor %}
+  Outbound requests:
+  <ul>
+    {% for request in account.get_outbound_requests %}
+    <li>
+      To: <a href="{% url 'account' request.to_account.id %}">{{request.to_account}}</a>
+      <a href="{% url 'cancel_friend_request' request.id %}">
+        <button type="button">Cancel</button>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  Inbound requests:
+  <ul>
+    {% for request in account.get_inbound_requests %}
+    <li>
+      From: <a href="{% url 'account' request.from_account.id %}">{{request.from_account}}</a>
+      <a href="{% url 'accept_friend_request' request.id %}">
+        <button type="button">Accept</button>
+      </a>
+      <a href="{% url 'decline_friend_request' request.id %}">
+        <button type="button">Decline</button>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  Friends:
+  <ul>
+    <div class="friends" , d>
+      {% for friend in account.friends.all %}
+      <img src={{friend.account_picture.url}}><br>
+      <li><a href="{% url 'account' friend.id %}">{{friend}}</a>
+      </li>
+      {% endfor %}
+  </ul>
+  </div>
 </main>
+
 
 {% endblock content %}

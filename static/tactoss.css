@@ -90,6 +90,16 @@ header {
 }
 
 
+.friends img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+
 /* responsive styles: adapt to smaller screen sizes */
 @media screen and (max-width: 980px) {
 

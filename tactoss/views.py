@@ -107,7 +107,7 @@ class SendFriendRequest(View):
     if from_account != to_account:
       friend_request, new = Friend_Requests.objects.get_or_create(
         from_account=from_account, to_account = to_account)
-    return redirect('teams')
+    return redirect('friends')
 
 class AcceptFriendRequest(View):
   def dispatch(self, request, *args, **kwargs):
@@ -116,5 +116,27 @@ class AcceptFriendRequest(View):
       friend_request.to_account.friends.add(friend_request.from_account)
       friend_request.from_account.friends.add(friend_request.to_account)
       friend_request.delete()
-    return redirect('teams')
-    
+    return redirect('friends')
+  
+class CancelFriendRequest(View):
+  def dispatch(self, request, *args, **kwargs):
+    friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
+    if friend_request.from_account.user == self.request.user:
+      friend_request.delete()
+    return redirect('friends')
+
+class DeclineFriendRequest(View):
+  def dispatch(self, request, *args, **kwargs):
+    friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
+    if friend_request.to_account.user == self.request.user:
+      friend_request.delete()
+    return redirect('friends')
+
+class FriendStatus(DetailView):
+  model = Account
+  template_name = "tactoss/friends.html"
+  context_object_name = 'account'
+  
+  def get_object(self):
+    '''Returns the logged in user object'''
+    return Account.objects.get(user=self.request.user)
