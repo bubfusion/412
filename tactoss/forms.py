@@ -1,8 +1,14 @@
 from django import forms
-from .models import Account
+from .models import Account, SmokeGif
 
 class CreateAccountForm(forms.ModelForm):
     '''Class for profile creation form'''
     class Meta:
       model = Account
       fields = ['display_name', 'email', 'steam_url', 'discord_username', 'elo_rating']
+      
+class CreateLineupForm(forms.ModelForm):
+  '''Class for lineup gif creation'''
+  class Meta:
+    model = SmokeGif
+    fields = ['map', 'area']

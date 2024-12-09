@@ -20,4 +20,6 @@ urlpatterns = [
   path('login/', auth_views.LoginView.as_view(template_name='tactoss/login.html'), name = "login"),
   path('logout/', auth_views.LogoutView.as_view(template_name='tactoss/home.html'), name = "logout"),
   path(r'create_account', views.CreateAccountView.as_view(), name = "create_account"), #URL for creating an account
+  path(r'feed/', views.ShowFeedView.as_view(template_name='tactoss/feed.html'), name = "feed"),
+  path(r'create_lineup', views.CreateLineuptView.as_view(), name = "create_lineup"),
 ]

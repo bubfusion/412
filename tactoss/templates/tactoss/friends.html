@@ -32,7 +32,7 @@
 
   Friends:
   <ul>
-    <div class="friends" , d>
+    <div class="friends">
       {% for friend in account.friends.all %}
       <img src={{friend.account_picture.url}}><br>
       <li><a href="{% url 'account' friend.id %}">{{friend}}</a>

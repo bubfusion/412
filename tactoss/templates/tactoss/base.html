@@ -16,8 +16,10 @@
     <ul class="list">
       <li><a href="{% url 'home' %}">Home</a></li>
       <li><a href="{% url 'teams' %}">Teams</a></li>
+      <li><a href="{% url 'feed' %}">Smokes</a></li>
       {% if user.is_authenticated%}
       <li><a href="{% url 'friends' %}">Friends</a></li>
+      <li><a href="{% url 'create_lineup' %}">Submit lineup</a></li>
       <li>
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}

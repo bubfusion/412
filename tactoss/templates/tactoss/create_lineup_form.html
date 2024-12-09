@@ -1,0 +1,20 @@
+{% extends 'tactoss/base.html' %}
+
+
+{% block content %}
+<h1>Create a lineup</h1>
+
+<main class="grid-container">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <br>Where does your lineup land?: <br>
+    <input type="text" id="area" name="area" required><br>
+    What map is your smoke for?: <br>
+    <input type="text" id="map" name="map"><br>
+    Gif: <br>
+    <input type="file" name="gif"><br>
+    <br>
+    <input type="submit">
+  </form>
+</main>
+{% endblock %}

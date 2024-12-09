@@ -78,7 +78,7 @@ class JoinTeamView(LoginRequiredMixin, View):
       
     return redirect('team', pk=team.pk)
   
-class CreateTeam(View):
+class CreateTeam(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     account = Account.objects.filter(user=self.request.user).first()
     if account.user_team == None:
@@ -89,7 +89,7 @@ class CreateTeam(View):
     else:
       return redirect('teams')
 
-class LeaveTeam(View):
+class LeaveTeam(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     account = Account.objects.filter(user=self.request.user).first()
     team = account.user_team
@@ -119,7 +119,7 @@ class LeaveTeam(View):
       return redirect('teams')
   
 # Friend system inspired by https://medium.com/analytics-vidhya/add-friends-with-689a2fa4e41d
-class SendFriendRequest(View):
+class SendFriendRequest(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     from_account = Account.objects.filter(user=self.request.user).first()
     to_account = Account.objects.filter(user=kwargs['request_pk']).first()
@@ -131,7 +131,7 @@ class SendFriendRequest(View):
         from_account=from_account, to_account = to_account)
     return redirect('friends')
 
-class AcceptFriendRequest(View):
+class AcceptFriendRequest(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
     if friend_request.to_account.user == self.request.user:
@@ -140,21 +140,21 @@ class AcceptFriendRequest(View):
       friend_request.delete()
     return redirect('friends')
   
-class CancelFriendRequest(View):
+class CancelFriendRequest(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
     if friend_request.from_account.user == self.request.user:
       friend_request.delete()
     return redirect('friends')
 
-class DeclineFriendRequest(View):
+class DeclineFriendRequest(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
     if friend_request.to_account.user == self.request.user:
       friend_request.delete()
     return redirect('friends')
 
-class FriendStatus(DetailView):
+class FriendStatus(LoginRequiredMixin, DetailView):
   model = Account
   template_name = "tactoss/friends.html"
   context_object_name = 'account'
@@ -200,3 +200,41 @@ class CreateAccountView(CreateView):
     user_creation_form = UserCreationForm()
     context['user_creation_form'] = user_creation_form
     return context
+  
+
+class ShowFeedView(ListView):
+  '''Class for showing all open teams'''
+  model = SmokeGif
+  template_name = "tactoss/feed.html"
+  context_object_name = 'lineups'
+  ordering = ['-published']
+
+class CreateLineuptView(CreateView):
+  '''View for creating a profile'''
+  form_class = CreateLineupForm
+  template_name = "tactoss/create_lineup_form.html"
+
+
+  def form_valid(self, form):
+    '''Cleans data and adds it to the database on sucessful submission'''
+    
+    # gets instance of account form
+    lineup = form.instance
+    
+    # Sets fk to newly created user
+    lineup.account = Account.objects.filter(user=self.request.user).first()
+    print(Account.objects.filter(user=self.request.user).first())
+    
+    gif = self.request.FILES.get('gif')
+    if gif != None:
+      lineup.gif = gif
+    lineup.save()
+  
+    return redirect(self.get_success_url())
+
+
+  def get_success_url(self) -> str:
+      '''Return the URL to redirect to after successfully submitting form.
+      Sends user to profile they created'''
+      return reverse('feed')
+    
