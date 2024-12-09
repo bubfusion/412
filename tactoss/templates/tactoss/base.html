@@ -27,7 +27,7 @@
       <!-- Things to show only logged out users -->
       {% else %}
       <li><a href="{% url 'login' %}">Login</a></li>
-      <!-- <li><a href="{% url 'create_profile' %}">Create Profile</a></li> -->
+      <li><a href="{% url 'create_account' %}">Create Account</a></li>
       {% endif %}
     </ul>
   </nav>

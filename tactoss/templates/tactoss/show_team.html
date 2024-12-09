@@ -8,94 +8,30 @@
 
   <div class="team_member">
     <ul>
-
+      {% for player in team.get_players %}
+      {% if player %}
       <li>
-        <h3>{{team.team_leader.display_name}}</h3>
-        {% if team.team_leader.discord_username %}
-        <p>Discord: {{team.team_leader.discord_username}}</p>
+        <a href="{% url 'account' player.id%}">
+          <h3>{{player.display_name}}</h3>
+        </a>
+        {% if player.discord_username %}
+        <p>Discord: {{player.discord_username}}</p>
         {% endif %}
-        {% if team.team_leader.steam_url %}
-        <p>Steam profile: <a href={{team.team_leader.steam_url}}>link</a></p>
+        {% if player.steam_url %}
+        <p>Steam profile: <a href={{player.steam_url}}>link</a></p>
         {% endif %}
-        {% if team.team_leader.elo_rating != None%}
-        Elo: {{team.team_leader.elo_rating}}
+        {% if player.elo_rating != None%}
+        Elo: {{player.elo_rating}}
         {% endif %}
-        {% if team.team_leader.account_picture %}
-        <img src={{team.team_leader.account_picture.url}}>
+        {% if player.account_picture %}
+        <img src={{player.account_picture.url}}>
         {% endif %}
-      </li>
 
-      {% if team.account_2 %}
-      <li>
-        <h3>{{team.account_2.display_name}}</h3>
-        {% if team.account_2.discord_username %}
-        <p>Discord: {{team.account_2.discord_username}}</p>
-        {% endif %}
-        {% if team.account_2.steam_url %}
-        <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
-        {% endif %}
-        {% if team.account_2.elo_rating != None%}
-        Elo: {{team.account_2.elo_rating}}
-        {% endif %}
-        {% if team.account_2.account_picture %}
-        <img src={{team.account_2.account_picture.url}}>
-        {% endif %}
       </li>
       {% endif %}
+      {% endfor %}
 
-      {% if team.account_3 %}
-      <li>
-        <h3>{{team.account_3.display_name}}</h3>
-        {% if team.account_3.discord_username %}
-        <p>Discord: {{team.account_3.discord_username}}</p>
-        {% endif %}
-        {% if team.account_3.steam_url %}
-        <p>Steam profile: <a href={{team.account_3.steam_url}}>link</a></p>
-        {% endif %}
-        {% if team.account_3.elo_rating != None%}
-        Elo: {{team.account_3.elo_rating}}
-        {% endif %}
-        {% if team.account_3.account_picture %}
-        <img src={{team.account_3.account_picture.url}}>
-        {% endif %}
-      </li>
-      {% endif %}
 
-      {% if team.account_4 %}
-      <li>
-        <h3>{{team.account_4.display_name}}</h3>
-        {% if team.account_4.discord_username %}
-        <p>Discord: {{team.account_4.discord_username}}</p>
-        {% endif %}
-        {% if team.account_4.steam_url %}
-        <p>Steam profile: <a href={{team.account_4.steam_url}}>link</a></p>
-        {% endif %}
-        {% if team.account_4.elo_rating != None%}
-        Elo: {{team.account_4.elo_rating}}
-        {% endif %}
-        {% if team.account_4.account_picture %}
-        <img src={{team.account_4.account_picture.url}}>
-        {% endif %}
-      </li>
-      {% endif %}
-
-      {% if team.account_5 %}
-      <li>
-        <h3>{{team.account_5.display_name}}</h3>
-        {% if team.account_5.discord_username %}
-        <p>Discord: {{team.account_5.discord_username}}</p>
-        {% endif %}
-        {% if team.account_5.steam_url %}
-        <p>Steam profile: <a href={{team.account_5.steam_url}}>link</a></p>
-        {% endif %}
-        {% if team.account_5.elo_rating != None%}
-        Elo: {{team.account_5.elo_rating}}
-        {% endif %}
-        {% if team.account_5.account_picture %}
-        <img src={{team.account_5.account_picture.url}}>
-        {% endif %}
-      </li>
-      {% endif %}
 
     </ul>
   </div>

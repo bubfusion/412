@@ -159,6 +159,19 @@ to keep visual style same in nav bar */
   text-decoration: underline;
 }
 
+.button {
+  display: block;
+  width: 115px;
+  height: 25px;
+  background: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  line-height: 15px;
+}
+
 
 /* responsive styles: adapt to smaller screen sizes */
 @media screen and (max-width: 980px) {

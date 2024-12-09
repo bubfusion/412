@@ -3,10 +3,14 @@ from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render
 
-# Create your views here.
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 from .models import *
+from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 from django.shortcuts import redirect
 
@@ -21,6 +25,15 @@ class ShowAccountPageView(DetailView):
   model = Account
   template_name = "tactoss/show_account.html"
   context_object_name = 'account'
+  
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    # Check if the user is authenticated
+    if self.request.user.is_authenticated:
+        account = Account.objects.filter(user=self.request.user).first()
+        context['account_logged'] = account
+        
+    return context
 
 class ShowTeamPageView(DetailView):
   '''Class for showing a team'''
@@ -47,17 +60,22 @@ class JoinTeamView(LoginRequiredMixin, View):
   '''View for joining a team'''
   def dispatch(self, request, *args, **kwargs):
     account = Account.objects.filter(user=self.request.user).first()
-    print(account)
     team = Team.objects.filter(pk=kwargs['pk']).first()
-    print(account)
     if account.user_team == None and team.slot_open():
       print("success")
       team.add_player(account)
       account.save()
-    
-    if team.slot_open() == False:
-      team.slot_open = False
       team.save()
+    empty_slot = False
+    for player in [team.team_leader, team.account_2, team.account_3, team.account_4, team.account_5]:
+      if player == None:
+        empty_slot = True
+        break
+    if empty_slot == False:
+      team.is_open = False
+    
+    team.save()
+      
     return redirect('team', pk=team.pk)
   
 class CreateTeam(View):
@@ -96,6 +114,7 @@ class LeaveTeam(View):
                 team.account_4 = None
               elif account == team.account_5:
                 team.account_5 = None
+              team.is_open = True
               team.save()
       return redirect('teams')
   
@@ -143,3 +162,41 @@ class FriendStatus(DetailView):
   def get_object(self):
     '''Returns the logged in user object'''
     return Account.objects.get(user=self.request.user)
+
+class CreateAccountView(CreateView):
+  '''View for creating a profile'''
+  form_class = CreateAccountForm
+  template_name = "tactoss/create_account_form.html"
+
+
+  def form_valid(self, form):
+    '''Cleans data and adds it to the database on sucessful submission'''
+    
+    # gets instance of account form
+    user_creation_form = UserCreationForm(self.request.POST)
+    user = user_creation_form.save()
+    account = form.instance
+    
+    # Sets fk to newly created user
+    account.user = user
+    account_picture = self.request.FILES.get('account_picture')
+    if account_picture != None:
+      account.account_picture = account_picture
+    account.save()
+    # Logs user in after making account
+    login(self.request, user) 
+    
+    return redirect(self.get_success_url())
+
+
+  def get_success_url(self) -> str:
+      '''Return the URL to redirect to after successfully submitting form.
+      Sends user to profile they created'''
+      return reverse('home')
+    
+  def get_context_data(self, **kwargs):
+    '''Gets the context for user creation form'''
+    context = super().get_context_data(**kwargs)
+    user_creation_form = UserCreationForm()
+    context['user_creation_form'] = user_creation_form
+    return context

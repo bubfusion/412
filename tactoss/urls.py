@@ -19,4 +19,5 @@ urlpatterns = [
   path(r'decline_friend_request/<int:request_pk>', views.DeclineFriendRequest.as_view(), name="decline_friend_request"),
   path('login/', auth_views.LoginView.as_view(template_name='tactoss/login.html'), name = "login"),
   path('logout/', auth_views.LogoutView.as_view(template_name='tactoss/home.html'), name = "logout"),
+  path(r'create_account', views.CreateAccountView.as_view(), name = "create_account"), #URL for creating an account
 ]

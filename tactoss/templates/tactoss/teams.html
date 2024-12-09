@@ -18,9 +18,8 @@
 
 
   {% for team in teams %}
-  {% if team.is_open %}
+  {% if team.is_open == True%}
   <p>{{team.team_leader.display_name}}'s team</p>
-  {% endif %}
   {% if team.get_average_elo != 0 %}
   Average elo: {{team.get_average_elo}}
   {% endif %}
@@ -39,6 +38,7 @@
     {% endif %}
     {% endfor %}
   </div>
+  {% endif %}
   {% endfor %}
 
 </main>

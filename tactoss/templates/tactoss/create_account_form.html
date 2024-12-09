@@ -1,0 +1,28 @@
+{% extends 'tactoss/base.html' %}
+
+
+{% block content %}
+<h1>Create an account</h1>
+
+<main class="grid-container">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Gets instance of the account form -->
+    {{user_creation_form}}
+    <br>Display name: <br>
+    <input type="text" id="display_name" name="display_name" required><br>
+    Email: <br>
+    <input type="email" id="email" name="email" required><br>
+    Steam url: <br>
+    <input type="url" id="steam_url" name="steam_url" required><br>
+    Discord username: <br>
+    <input type="text" id="discord_username" name="discord_username"><br>
+    CS2 elo: <br>
+    <input type="number" id="elo_rating" name="elo_rating"><br>
+    Profile picture url: <br>
+    <input type="file" name="account_picture"><br>
+    <br>
+    <input type="submit">
+  </form>
+</main>
+{% endblock %}

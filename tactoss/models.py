@@ -13,7 +13,7 @@ class Account(models.Model):
   steam_url = models.URLField(blank=True)
   # Discord username so players can add each other to talk
   discord_username = models.TextField(blank=True)
-  account_picture = models.ImageField(blank=True)
+  account_picture = models.ImageField(blank=True, default='default.jpg')
   join_date = models.DateField(auto_now_add=True)
   user_team = models.ForeignKey(
         'Team',
@@ -40,7 +40,6 @@ class Friend_Requests(models.Model):
   
 
 
-    
 class Team(models.Model):
   '''Encapulates a team of users who will play together'''
   # Leader of the party. Every team must have a leader so it is not optional
@@ -88,7 +87,7 @@ class Team(models.Model):
   def slot_open(self):
     if self.is_open == False:
       return False
-    elif self.account_2 != None and self.account_3  != None and self.account_4 != None and self.account_5 != None:
+    elif self.account_2 and self.account_3 and self.account_4 and self.account_5:
       return False
     else:
       return True
@@ -161,11 +160,3 @@ class SmokeGif(models.Model):
     '''Returns string form of smokegif'''
     return f'{self.account}\'s smoke for {self.area} on {self.map}'
   
-class Friend(models.Model):
-   '''Encapsulates a friend relationship between 2 users'''
-   profiel1 = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="account1")
-   account2 = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="account2")
-
-   def __str__(self):
-    '''Returns string form of status'''
-    return f'{self.profiel1} & {self.account2}'
