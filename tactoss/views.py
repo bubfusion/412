@@ -36,8 +36,11 @@ class ShowTeamsView(ListView):
   
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    account = Account.objects.filter(user=self.request.user).first()
-    context['account'] = account
+    # Check if the user is authenticated
+    if self.request.user.is_authenticated:
+        account = Account.objects.filter(user=self.request.user).first()
+        context['account'] = account
+        
     return context
   
 class JoinTeamView(LoginRequiredMixin, View):

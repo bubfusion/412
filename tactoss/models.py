@@ -22,6 +22,7 @@ class Account(models.Model):
         blank=True,
     )
   friends = models.ManyToManyField("Account", blank=True)
+  elo_rating = models.IntegerField(blank=True, null=True)
   
   def get_outbound_requests(self):
     return Friend_Requests.objects.filter(from_account = self)
@@ -123,6 +124,15 @@ class Team(models.Model):
       account.user_team = self
       account.save()
     self.save()
+    
+  def get_average_elo(self):
+    count = 0
+    total_elo = 0
+    for player in [self.team_leader, self.account_2, self.account_3, self.account_4, self.account_5]:
+      if player != None and player.elo_rating != None:
+        total_elo += player.elo_rating
+        count+=1
+    return int(total_elo/count)
     
   def get_players(self):
     return [self.team_leader, self.account_2, self.account_3, self.account_4, self.account_5]

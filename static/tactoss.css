@@ -1,10 +1,16 @@
 /* This CSS was derived from NetNinja's multi-column grid example. */
 
 body {
-  margin: 30px;
-  background: #0d1117;
+  padding-top: 60px;
+  margin: 0;
+  min-height: 200vh;
+  background: #333;
   color: white;
   font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+a {
+  color: white;
 }
 
 ul,
@@ -97,6 +103,60 @@ header {
   border: 2px solid;
   object-fit: cover;
   margin-bottom: 4px;
+}
+
+/* Based on https://codepen.io/Mamboleoo/pen/qBoqbVm */
+nav {
+  position: fixed;
+  height: 60px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease-out;
+  backdrop-filter: blur(8px) brightness(1.2);
+  -webkit-backdrop-filter: blur(8px) brightness(1.2);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+
+  li {
+    margin-left: 20px;
+  }
+}
+
+/* Makes the login and out buttons look like anchor tags
+to keep visual style same in nav bar */
+.logout-login-btn {
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  text-decoration: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.logout-login-btn:hover,
+.logout-login-btn:focus {
+  text-decoration: underline;
 }
 
 

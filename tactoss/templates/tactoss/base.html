@@ -12,6 +12,25 @@
 </head>
 
 <body>
+  <nav>
+    <ul class="list">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'teams' %}">Teams</a></li>
+      {% if user.is_authenticated%}
+      <li><a href="{% url 'friends' %}">Friends</a></li>
+      <li>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="logout-login-btn">Logout</button>
+        </form>
+      </li>
+      <!-- Things to show only logged out users -->
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <!-- <li><a href="{% url 'create_profile' %}">Create Profile</a></li> -->
+      {% endif %}
+    </ul>
+  </nav>
   {% block content %}
   {% endblock content %}
 </body>

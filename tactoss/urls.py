@@ -1,5 +1,6 @@
 from django.urls import path
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from . import views
 
 # URL paths for restaurant
@@ -16,5 +17,6 @@ urlpatterns = [
   path(r'friends', views.FriendStatus.as_view(), name='friends'),
   path(r'cancel_friend_request/<int:request_pk>', views.CancelFriendRequest.as_view(), name="cancel_friend_request"),
   path(r'decline_friend_request/<int:request_pk>', views.DeclineFriendRequest.as_view(), name="decline_friend_request"),
-  
+  path('login/', auth_views.LoginView.as_view(template_name='tactoss/login.html'), name = "login"),
+  path('logout/', auth_views.LogoutView.as_view(template_name='tactoss/home.html'), name = "logout"),
 ]

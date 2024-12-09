@@ -21,6 +21,9 @@
   {% if team.is_open %}
   <p>{{team.team_leader.display_name}}'s team</p>
   {% endif %}
+  {% if team.get_average_elo != 0 %}
+  Average elo: {{team.get_average_elo}}
+  {% endif %}
   {% if user.is_authenticated and account.user_team == None %}
   <a href="{% url 'join_team' team.id %}">
     <button type="button">Join</button>
