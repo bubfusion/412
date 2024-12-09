@@ -15,6 +15,12 @@ class Account(models.Model):
   discord_username = models.TextField(blank=True)
   account_picture = models.ImageField(blank=True)
   join_date = models.DateField(auto_now_add=True)
+  user_team = models.ForeignKey(
+        'Team',
+        on_delete=models.SET_NULL,
+        null=True, 
+        blank=True,
+    )
   
   def __str__(self):
     '''Returns string form of a account'''
@@ -88,14 +94,39 @@ class Team(models.Model):
   def add_player(self, account):
     if self.account_2 == None:
       self.account_2 = account
+      account.user_team = self
+      account.save()
     elif self.account_3 == None:
       self.account_3 = account
+      account.user_team = self
+      account.save()
     elif self.account_4 == None:
       self.account_4 = account
+      account.user_team = self
+      account.save()
     elif self.account_5 == None:
       self.account_5 = account
+      account.user_team = self
+      account.save()
     self.save()
-      
+    
+  # def disband_team(self):
+  #   self.team_leader.user_team = None
+  #   self.team_leader.save()
+    
+  #   if self.account_2 != None:
+  #     self.account_2.user_team = None
+  #     self.account_2.save()
+  #   if self.account_3 != None:
+  #     self.account_3.user_team = None
+  #     self.account_3.save()
+  #   if self.account_4 != None:
+  #     self.account_4.user_team = None
+  #     self.account_4.save()
+  #   if self.account_4 != None:
+  #     self.account_4.user_team = None
+  #     self.account_4.save()
+  #   self.save()
   def __str__(self):
     '''Returns string form of a team'''
     return f'{self.team_leader}\'s team'

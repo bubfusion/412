@@ -3,13 +3,29 @@
 
 {% block content %}
 <main class="grid-container">
-
+  {% if account.user_team != None %}
+  <a href="{% url 'team' account.user_team.id %}">
+    <button type="button">Your team</button>
+  </a>
+  <a href="{% url 'leave' %}">
+    <button type="button">Leave team</button>
+  </a>
+  {% elif user.is_authenticated%}
+  <a href="{% url 'create_team' %}">
+    <button type="button">Create team</button>
+  </a>
+  {% endif %}
   {% for team in teams %}
   {% if team.is_open %}
   <p>{{team.team_leader.display_name}}'s team</p>
   {% endif %}
+  {% if user.is_authenticated and account.user_team == None %}
   <a href="{% url 'join_team' team.id %}">
     <button type="button">Join</button>
+  </a>
+  {% endif %}
+  <a href="{% url 'team' team.id %}">
+    <button type="button">View</button>
   </a>
   {% endfor %}
 

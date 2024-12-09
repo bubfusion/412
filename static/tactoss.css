@@ -30,6 +30,51 @@ header {
   margin: 20px auto;
 }
 
+.team_member {
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.team_member h4 {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 1.2em;
+}
+
+.team_member ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.team_member ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  text-align: center;
+}
+
+.team_member ul li img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+.team_member ul li span {
+  font-size: 0.75em;
+  color: #333;
+}
+
+.team_member a {
+  text-decoration: none;
+}
 
 
 /* responsive styles: adapt to smaller screen sizes */

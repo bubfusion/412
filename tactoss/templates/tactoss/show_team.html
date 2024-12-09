@@ -6,56 +6,84 @@
 
   <h2>{{team.team_leader.display_name}}'s team</h2>
 
+  <div class="team_member">
+    <ul>
 
-  <h3>Name: {{team.team_leader.display_name}}</h3>
-  {% if team.team_leader.discord_username %}
-  <p>Discord username: {{team.team_leader.discord_username}}</p>
-  {% endif %}
-  {% if team.team_leader.steam_url %}
-  <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
-  {% endif %}
+      <li>
+        <h3>{{team.team_leader.display_name}}</h3>
+        {% if team.team_leader.discord_username %}
+        <p>Discord: {{team.team_leader.discord_username}}</p>
+        {% endif %}
+        {% if team.team_leader.steam_url %}
+        <p>Steam profile: <a href={{team.team_leader.steam_url}}>link</a></p>
+        {% endif %}
+        {% if team.team_leader.account_picture %}
+        <img src={{team.team_leader.account_picture.url}}>
+        {% endif %}
+      </li>
 
+      {% if team.account_2 %}
+      <li>
+        <h3>{{team.account_2.display_name}}</h3>
+        {% if team.account_2.discord_username %}
+        <p>Discord: {{team.account_2.discord_username}}</p>
+        {% endif %}
+        {% if team.account_2.steam_url %}
+        <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
+        {% endif %}
+        {% if team.account_2.account_picture %}
+        <img src={{team.account_2.account_picture.url}}>
+        {% endif %}
+      </li>
+      {% endif %}
 
-  {% if team.account_2 %}
-  <h3>Name: {{team.account_2.display_name}}</h3>
-  {% if team.account_2.discord_username %}
-  <p>Discord username: {{team.account_2.discord_username}}</p>
-  {% endif %}
-  {% if team.account_2.steam_url %}
-  <p>Steam profile: <a href={{team.account_2.steam_url}}>link</a></p>
-  {% endif %}
-  {% endif %}
+      {% if team.account_3 %}
+      <li>
+        <h3>{{team.account_3.display_name}}</h3>
+        {% if team.account_3.discord_username %}
+        <p>Discord: {{team.account_3.discord_username}}</p>
+        {% endif %}
+        {% if team.account_3.steam_url %}
+        <p>Steam profile: <a href={{team.account_3.steam_url}}>link</a></p>
+        {% endif %}
+        {% if team.account_3.account_picture %}
+        <img src={{team.account_3.account_picture.url}}>
+        {% endif %}
+      </li>
+      {% endif %}
 
-  {% if team.account_3 %}
-  <h3>Name: {{team.account_3.display_name}}</h3>
-  {% if team.account_3.discord_username %}
-  <p>Discord username: {{team.account_3.discord_username}}</p>
-  {% endif %}
-  {% if team.account_3.steam_url %}
-  <p>Steam profile: <a href={{team.account_3.steam_url}}>link</a></p>
-  {% endif %}
-  {% endif %}
+      {% if team.account_4 %}
+      <li>
+        <h3>{{team.account_4.display_name}}</h3>
+        {% if team.account_4.discord_username %}
+        <p>Discord: {{team.account_4.discord_username}}</p>
+        {% endif %}
+        {% if team.account_4.steam_url %}
+        <p>Steam profile: <a href={{team.account_4.steam_url}}>link</a></p>
+        {% endif %}
+        {% if team.account_4.account_picture %}
+        <img src={{team.account_4.account_picture.url}}>
+        {% endif %}
+      </li>
+      {% endif %}
 
-  {% if team.account_4 %}
-  <h3>Name: {{team.account_4.display_name}}</h3>
-  {% if team.account_4.discord_username %}
-  <p>Discord username: {{team.account_4.discord_username}}</p>
-  {% endif %}
-  {% if team.account_4.steam_url %}
-  <p>Steam profile: <a href={{team.account_4.steam_url}}>link</a></p>
-  {% endif %}
-  {% endif %}
+      {% if team.account_5 %}
+      <li>
+        <h3>{{team.account_5.display_name}}</h3>
+        {% if team.account_5.discord_username %}
+        <p>Discord: {{team.account_5.discord_username}}</p>
+        {% endif %}
+        {% if team.account_5.steam_url %}
+        <p>Steam profile: <a href={{team.account_5.steam_url}}>link</a></p>
+        {% endif %}
+        {% if team.account_5.account_picture %}
+        <img src={{team.account_5.account_picture.url}}>
+        {% endif %}
+      </li>
+      {% endif %}
 
-  {% if team.account_5 %}
-  <h3>Name: {{team.account_5.display_name}}</h3>
-  {% if team.account_5.discord_username %}
-  <p>Discord username: {{team.account_5.discord_username}}</p>
-  {% endif %}
-  {% if team.account_5.steam_url %}
-  <p>Steam profile: <a href={{team.account_5.steam_url}}>link</a></p>
-  {% endif %}
-  {% endif %}
-
+    </ul>
+  </div>
 
 </main>
 
