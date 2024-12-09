@@ -1,0 +1,11 @@
+{% extends "tactoss/base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="grid-container">
+  {% for requests in account.get_outbound_requests() %}
+  hello
+  {% endfor %}
+</main>
+
+{% endblock content %}

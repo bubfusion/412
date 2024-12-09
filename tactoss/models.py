@@ -21,11 +21,25 @@ class Account(models.Model):
         null=True, 
         blank=True,
     )
+  friends = models.ManyToManyField("Account", blank=True)
+  
+  def get_outbound_requests(self):
+    return Friend_Requests.objects.filter(from_account = self)
+  
+  def get_inbound_requests(self):
+    return Friend_Requests.objects.filter(to_account = self)
   
   def __str__(self):
     '''Returns string form of a account'''
     return f'{self.display_name}'
 
+class Friend_Requests(models.Model):
+  from_account = models.ForeignKey(Account, related_name= "from_account", on_delete=models.CASCADE)
+  to_account = models.ForeignKey(Account,related_name="to_account", on_delete=models.CASCADE)
+  
+
+
+    
 class Team(models.Model):
   '''Encapulates a team of users who will play together'''
   # Leader of the party. Every team must have a leader so it is not optional
@@ -110,23 +124,9 @@ class Team(models.Model):
       account.save()
     self.save()
     
-  # def disband_team(self):
-  #   self.team_leader.user_team = None
-  #   self.team_leader.save()
-    
-  #   if self.account_2 != None:
-  #     self.account_2.user_team = None
-  #     self.account_2.save()
-  #   if self.account_3 != None:
-  #     self.account_3.user_team = None
-  #     self.account_3.save()
-  #   if self.account_4 != None:
-  #     self.account_4.user_team = None
-  #     self.account_4.save()
-  #   if self.account_4 != None:
-  #     self.account_4.user_team = None
-  #     self.account_4.save()
-  #   self.save()
+  def get_players(self):
+    return [self.team_leader, self.account_2, self.account_3, self.account_4, self.account_5]
+  
   def __str__(self):
     '''Returns string form of a team'''
     return f'{self.team_leader}\'s team'

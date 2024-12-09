@@ -15,6 +15,8 @@
     <button type="button">Create team</button>
   </a>
   {% endif %}
+
+
   {% for team in teams %}
   {% if team.is_open %}
   <p>{{team.team_leader.display_name}}'s team</p>
@@ -27,6 +29,13 @@
   <a href="{% url 'team' team.id %}">
     <button type="button">View</button>
   </a>
+  <div class="team_display">
+    {% for player in team.get_players %}
+    {% if player.account_picture %}
+    <img src="{{ player.account_picture.url }}">
+    {% endif %}
+    {% endfor %}
+  </div>
   {% endfor %}
 
 </main>

@@ -96,3 +96,25 @@ class LeaveTeam(View):
               team.save()
       return redirect('teams')
   
+# Friend system inspired by https://medium.com/analytics-vidhya/add-friends-with-689a2fa4e41d
+class SendFriendRequest(View):
+  def dispatch(self, request, *args, **kwargs):
+    from_account = Account.objects.filter(user=self.request.user).first()
+    to_account = Account.objects.filter(user=kwargs['request_pk']).first()
+    print(from_account)
+    print(to_account)
+    
+    if from_account != to_account:
+      friend_request, new = Friend_Requests.objects.get_or_create(
+        from_account=from_account, to_account = to_account)
+    return redirect('teams')
+
+class AcceptFriendRequest(View):
+  def dispatch(self, request, *args, **kwargs):
+    friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
+    if friend_request.to_account.user == self.request.user:
+      friend_request.to_account.friends.add(friend_request.from_account)
+      friend_request.from_account.friends.add(friend_request.to_account)
+      friend_request.delete()
+    return redirect('teams')
+    

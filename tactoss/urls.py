@@ -10,5 +10,8 @@ urlpatterns = [
   path(r'teams/join/<int:pk>', views.JoinTeamView.as_view(), name = "join_team"),
   path(r'teams/<int:pk>', views.ShowTeamPageView.as_view(), name = "team"),
   path(r'teams/create', views.CreateTeam.as_view(), name = "create_team"),
-  path(r'teams/leave', views.LeaveTeam.as_view(), name = "leave")
+  path(r'teams/leave', views.LeaveTeam.as_view(), name = "leave"),
+  path(r'send_friend_request/<int:request_pk>', views.SendFriendRequest.as_view(), name = "send_friend_request"),
+  path(r'accept_friend_request/<int:request_pk>', views.AcceptFriendRequest.as_view(), name="accept_friend_request"),
+  
 ]

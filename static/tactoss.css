@@ -76,6 +76,19 @@ header {
   text-decoration: none;
 }
 
+.team_display div {
+  display: inline-block;
+}
+
+.team_display img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
 
 /* responsive styles: adapt to smaller screen sizes */
 @media screen and (max-width: 980px) {
