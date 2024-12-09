@@ -1,0 +1,24 @@
+{% extends 'tactoss/base.html' %}
+
+
+{% block content %}
+<h1>Update your account</h1>
+
+<main class="grid-container">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <br>Display name: <br>
+    <input type="text" id="display_name" name="display_name" value="{{account.display_name}}"><br>
+    Steam url: <br>
+    <input type="url" id="steam_url" name="steam_url" value="{{account.steam_url}}"><br>
+    Discord username: <br>
+    <input type="text" id="discord_username" name="discord_username" value="{{account.discord_username}}"><br>
+    CS2 elo: <br>
+    <input type="number" id="elo_rating" name="elo_rating" value="{{account.elo_rating}}"><br>
+    Profile picture: <br>
+    <input type="file" name="account_picture"><br>
+    <br>
+    <input type="submit">
+  </form>
+</main>
+{% endblock %}

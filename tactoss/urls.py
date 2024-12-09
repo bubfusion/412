@@ -22,4 +22,6 @@ urlpatterns = [
   path(r'create_account', views.CreateAccountView.as_view(), name = "create_account"), #URL for creating an account
   path(r'feed/', views.ShowFeedView.as_view(template_name='tactoss/feed.html'), name = "feed"),
   path(r'create_lineup', views.CreateLineuptView.as_view(), name = "create_lineup"),
+  path(r'update_account', views.UpdateAccounteView.as_view(), name = "update_account"),
+  
 ]

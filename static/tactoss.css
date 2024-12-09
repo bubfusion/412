@@ -1,7 +1,7 @@
 /* This CSS was derived from NetNinja's multi-column grid example. */
 
 body {
-  padding-top: 60px;
+  padding-top: 50px;
   margin: 0;
   min-height: 200vh;
   background: #333;
@@ -99,6 +99,15 @@ header {
 .friends img {
   width: 60px;
   height: 60px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+.profile img {
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   border: 2px solid;
   object-fit: cover;

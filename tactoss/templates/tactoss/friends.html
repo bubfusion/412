@@ -3,6 +3,7 @@
 
 {% block content %}
 <main class="grid-container">
+  <a href="{% url 'account' account.id %}" class="button">Your account</a><br>
   Outbound requests:
   <ul>
     {% for request in account.get_outbound_requests %}

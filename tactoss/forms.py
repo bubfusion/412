@@ -12,3 +12,10 @@ class CreateLineupForm(forms.ModelForm):
   class Meta:
     model = SmokeGif
     fields = ['map', 'area']
+    
+class UpdateAccountForm(forms.ModelForm):
+   '''Class for updating a profile'''
+   class Meta:
+      '''Meta data for what can be updated (everything except first and last name)'''
+      model = Account
+      fields = ['display_name', 'steam_url', 'discord_username', 'elo_rating']

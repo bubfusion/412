@@ -238,3 +238,29 @@ class CreateLineuptView(CreateView):
       Sends user to profile they created'''
       return reverse('feed')
     
+class UpdateAccounteView(LoginRequiredMixin, UpdateView):
+    '''View for updating a profile'''
+    form_class = UpdateAccountForm
+    template_name = "tactoss/update_account_form.html"
+    model = Account
+    context_object_name = 'account'
+
+    def form_valid(self, form):
+      '''Cleans data and updates it in the database on sucessful submission'''
+      account = form.save()
+      
+      account_picture = self.request.FILES.get('account_picture')
+      if account_picture != None:
+        account.account_picture = account_picture
+      account.save()
+      
+      return super().form_valid(form)
+    
+    def get_object(self):
+      '''Returns the logged in user object'''
+      return Account.objects.get(user=self.request.user)
+
+
+    def get_success_url(self) -> str:
+        '''Return the URL to the profile that was updated'''
+        return reverse('account', kwargs={'pk': self.object.pk})
