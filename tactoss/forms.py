@@ -2,7 +2,7 @@ from django import forms
 from .models import Account, SmokeGif
 
 class CreateAccountForm(forms.ModelForm):
-    '''Class for profile creation form'''
+    '''Class for account creation form'''
     class Meta:
       model = Account
       fields = ['display_name', 'email', 'steam_url', 'discord_username', 'elo_rating']
@@ -16,6 +16,6 @@ class CreateLineupForm(forms.ModelForm):
 class UpdateAccountForm(forms.ModelForm):
    '''Class for updating a profile'''
    class Meta:
-      '''Meta data for what can be updated (everything except first and last name)'''
+      '''Meta data for what can be updated (can't change email and pfp is done differently)'''
       model = Account
       fields = ['display_name', 'steam_url', 'discord_username', 'elo_rating']

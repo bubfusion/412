@@ -27,16 +27,19 @@ class ShowAccountPageView(DetailView):
   context_object_name = 'account'
   
   def get_context_data(self, **kwargs):
+    '''Gets context and adds current user to it'''
     context = super().get_context_data(**kwargs)
     # Check if the user is authenticated
     if self.request.user.is_authenticated:
         account = Account.objects.filter(user=self.request.user).first()
+        # adds current logged in user to context. Used for checking if current
+        # account being viewed is theirs and to check friend status
         context['account_logged'] = account
         
     return context
 
 class ShowTeamPageView(DetailView):
-  '''Class for showing a team'''
+  '''Class for showing a specific team'''
   model = Team
   template_name = "tactoss/show_team.html"
   context_object_name = 'team'
@@ -48,6 +51,7 @@ class ShowTeamsView(ListView):
   context_object_name = 'teams'
   
   def get_context_data(self, **kwargs):
+    '''Gets and adds current logged in account to context'''
     context = super().get_context_data(**kwargs)
     # Check if the user is authenticated
     if self.request.user.is_authenticated:
@@ -61,16 +65,22 @@ class JoinTeamView(LoginRequiredMixin, View):
   def dispatch(self, request, *args, **kwargs):
     account = Account.objects.filter(user=self.request.user).first()
     team = Team.objects.filter(pk=kwargs['pk']).first()
+    
+    # Checks if user isn't in a team already and if team has open slot
     if account.user_team == None and team.slot_open():
-      print("success")
+      # Adds player to a team and updates it
       team.add_player(account)
       account.save()
       team.save()
+    # Variable to check if team has an open slot
     empty_slot = False
+    # Loops through all player slots
     for player in [team.team_leader, team.account_2, team.account_3, team.account_4, team.account_5]:
+    # If the current player slot is open, means team isn't full. Updates variable
       if player == None:
         empty_slot = True
         break
+    # If team is full, updates its bool that keeps track of it
     if empty_slot == False:
       team.is_open = False
     
