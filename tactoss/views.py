@@ -130,27 +130,34 @@ class LeaveTeam(LoginRequiredMixin, View):
   
 # Friend system inspired by https://medium.com/analytics-vidhya/add-friends-with-689a2fa4e41d
 class SendFriendRequest(LoginRequiredMixin, View):
+  '''Class for view to send request'''
   def dispatch(self, request, *args, **kwargs):
+    '''Handles logic for adding friends'''
     from_account = Account.objects.filter(user=self.request.user).first()
     to_account = Account.objects.filter(user=kwargs['request_pk']).first()
-    print(from_account)
-    print(to_account)
     
     if from_account != to_account:
+      # Only creates new if to player is not logged in player
+      # and if they isn't an outbound request
       friend_request, new = Friend_Requests.objects.get_or_create(
         from_account=from_account, to_account = to_account)
     return redirect('friends')
 
 class AcceptFriendRequest(LoginRequiredMixin, View):
+  '''Class for view to accept friend request'''
   def dispatch(self, request, *args, **kwargs):
+    '''Handles accepting logic'''
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
+    # Check to make sure logged in user matches the recieving user
     if friend_request.to_account.user == self.request.user:
       friend_request.to_account.friends.add(friend_request.from_account)
       friend_request.from_account.friends.add(friend_request.to_account)
+      # Deletes friend request object
       friend_request.delete()
     return redirect('friends')
   
 class CancelFriendRequest(LoginRequiredMixin, View):
+  '''View for cancelling a friend request (sender)'''
   def dispatch(self, request, *args, **kwargs):
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
     if friend_request.from_account.user == self.request.user:
@@ -158,6 +165,7 @@ class CancelFriendRequest(LoginRequiredMixin, View):
     return redirect('friends')
 
 class DeclineFriendRequest(LoginRequiredMixin, View):
+  '''Class for declining a friend request (reciever)'''
   def dispatch(self, request, *args, **kwargs):
     friend_request = Friend_Requests.objects.get(pk=kwargs['request_pk'])
     if friend_request.to_account.user == self.request.user:
@@ -165,12 +173,13 @@ class DeclineFriendRequest(LoginRequiredMixin, View):
     return redirect('friends')
 
 class FriendStatus(LoginRequiredMixin, DetailView):
+  '''View to see friends of yours'''
   model = Account
   template_name = "tactoss/friends.html"
   context_object_name = 'account'
   
   def get_object(self):
-    '''Returns the logged in user object'''
+    '''Returns the logged in account object'''
     return Account.objects.get(user=self.request.user)
 
 class CreateAccountView(CreateView):
@@ -190,6 +199,7 @@ class CreateAccountView(CreateView):
     # Sets fk to newly created user
     account.user = user
     account_picture = self.request.FILES.get('account_picture')
+    # Checks if a profile image was uploaded (there is default if one is not)
     if account_picture != None:
       account.account_picture = account_picture
     account.save()
@@ -201,7 +211,7 @@ class CreateAccountView(CreateView):
 
   def get_success_url(self) -> str:
       '''Return the URL to redirect to after successfully submitting form.
-      Sends user to profile they created'''
+      Sends user to home page'''
       return reverse('home')
     
   def get_context_data(self, **kwargs):
@@ -213,14 +223,15 @@ class CreateAccountView(CreateView):
   
 
 class ShowFeedView(ListView):
-  '''Class for showing all open teams'''
+  '''Class for showing all lineup gifs'''
   model = SmokeGif
   template_name = "tactoss/feed.html"
   context_object_name = 'lineups'
+  # Sorts by when they were added
   ordering = ['-published']
 
 class CreateLineuptView(CreateView):
-  '''View for creating a profile'''
+  '''View for creating a lineup gif'''
   form_class = CreateLineupForm
   template_name = "tactoss/create_lineup_form.html"
 
@@ -231,10 +242,11 @@ class CreateLineuptView(CreateView):
     # gets instance of account form
     lineup = form.instance
     
-    # Sets fk to newly created user
+    # Sets account fk to newly created lineup
     lineup.account = Account.objects.filter(user=self.request.user).first()
     print(Account.objects.filter(user=self.request.user).first())
     
+    # Gets image from upload
     gif = self.request.FILES.get('gif')
     if gif != None:
       lineup.gif = gif
@@ -245,11 +257,11 @@ class CreateLineuptView(CreateView):
 
   def get_success_url(self) -> str:
       '''Return the URL to redirect to after successfully submitting form.
-      Sends user to profile they created'''
+      Sends user to the feed'''
       return reverse('feed')
     
 class UpdateAccounteView(LoginRequiredMixin, UpdateView):
-    '''View for updating a profile'''
+    '''View for updating an account'''
     form_class = UpdateAccountForm
     template_name = "tactoss/update_account_form.html"
     model = Account
@@ -259,6 +271,7 @@ class UpdateAccounteView(LoginRequiredMixin, UpdateView):
       '''Cleans data and updates it in the database on sucessful submission'''
       account = form.save()
       
+      # Checks if a new image was uploaded and applies it if so
       account_picture = self.request.FILES.get('account_picture')
       if account_picture != None:
         account.account_picture = account_picture
@@ -272,5 +285,5 @@ class UpdateAccounteView(LoginRequiredMixin, UpdateView):
 
 
     def get_success_url(self) -> str:
-        '''Return the URL to the profile that was updated'''
+        '''Return the URL to the account that was updated'''
         return reverse('account', kwargs={'pk': self.object.pk})

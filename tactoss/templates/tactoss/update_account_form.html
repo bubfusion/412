@@ -6,6 +6,7 @@
 
 <main class="grid-container">
   <form method="POST" enctype="multipart/form-data">
+    <!-- Fields to update an account -->
     {% csrf_token %}
     <br>Display name: <br>
     <input type="text" id="display_name" name="display_name" value="{{account.display_name}}"><br>

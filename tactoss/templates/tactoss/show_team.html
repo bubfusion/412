@@ -7,6 +7,7 @@
   <h2>{{team.team_leader.display_name}}'s team</h2>
 
   <div class="team_member">
+    <!-- List of all players and there info for a team -->
     <ul>
       {% for player in team.get_players %}
       {% if player %}

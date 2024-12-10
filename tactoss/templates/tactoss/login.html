@@ -6,6 +6,7 @@
 
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
+  <!-- Gets premade login form -->
   {{form}}
 
   <input type="submit" name="submit" value="Submit">

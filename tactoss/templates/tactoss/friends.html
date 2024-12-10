@@ -3,7 +3,9 @@
 
 {% block content %}
 <main class="grid-container">
+  <!-- Link to view your account (thought this was best place to put it to not clog nav bar) -->
   <a href="{% url 'account' account.id %}" class="button">Your account</a><br>
+  <!-- Friend requests you've send -->
   Outbound requests:
   <ul>
     {% for request in account.get_outbound_requests %}
@@ -16,6 +18,7 @@
     {% endfor %}
   </ul>
 
+  <!-- Friend requests coming in -->
   Inbound requests:
   <ul>
     {% for request in account.get_inbound_requests %}
@@ -31,6 +34,7 @@
     {% endfor %}
   </ul>
 
+  <!-- All your current friends -->
   Friends:
   <ul>
     <div class="friends">

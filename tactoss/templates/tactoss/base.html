@@ -12,11 +12,13 @@
 </head>
 
 <body>
+  <!-- Nav bar for all pages -->
   <nav>
     <ul class="list">
       <li><a href="{% url 'home' %}">Home</a></li>
       <li><a href="{% url 'teams' %}">Teams</a></li>
       <li><a href="{% url 'feed' %}">Smokes</a></li>
+      <!-- Logged in user nav elements -->
       {% if user.is_authenticated%}
       <li><a href="{% url 'friends' %}">Friends</a></li>
       <li><a href="{% url 'create_lineup' %}">Submit lineup</a></li>

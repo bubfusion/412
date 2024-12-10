@@ -4,12 +4,15 @@
 {% block content %}
 <main class="grid-container">
   <div class="profile">
+    <!-- Displays an account -->
     <img src="{{account.account_picture.url}}" alt="{{account.display_name}}'s profile picture">
     <p>{{account.display_name}}'s profile</p>
+    <!-- If it is your account, you can edit it by this link -->
     {% if account_logged == account %}
     <a href="{% url 'update_account' %}" class="button">Update Profile</a>
     {% endif %}
 
+    <!-- Friend request button for non-friends and not yourself -->
     {% if account_logged != account and account not in account_logged.friends.all %}
     <a href="{% url 'send_friend_request' account.user.id %}" class="button">Send friend request</a>
     {% endif %}

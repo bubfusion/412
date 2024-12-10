@@ -6,6 +6,7 @@
 
 <main class="grid-container">
 
+  <!-- Loops through every lineup and displays it -->
   {% for lineup in lineups %}
   <img src="{{lineup.gif.url}}">
   <a href="{% url 'account' lineup.account.id%}">{{lineup.account.display_name}}<div class="friends"> <img

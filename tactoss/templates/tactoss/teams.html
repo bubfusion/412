@@ -16,21 +16,25 @@
   </a>
   {% endif %}
 
-
+  <!-- Displays all open teams -->
   {% for team in teams %}
   {% if team.is_open == True%}
   <p>{{team.team_leader.display_name}}'s team</p>
+  <!-- Displays average elo of a team -->
   {% if team.get_average_elo != 0 %}
   Average elo: {{team.get_average_elo}}
   {% endif %}
+  <!-- Allows logged in users who aren't in a team to join the team -->
   {% if user.is_authenticated and account.user_team == None %}
   <a href="{% url 'join_team' team.id %}">
     <button type="button">Join</button>
   </a>
   {% endif %}
+  <!-- Anyone can view a team -->
   <a href="{% url 'team' team.id %}">
     <button type="button">View</button>
   </a>
+  <!-- Displays the profile pictures of everyone in the team -->
   <div class="team_display">
     {% for player in team.get_players %}
     {% if player.account_picture %}
